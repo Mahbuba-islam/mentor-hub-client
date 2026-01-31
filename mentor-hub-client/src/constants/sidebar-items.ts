@@ -1,0 +1,95 @@
+import { BookIcon, UserIcon, UsersIcon, DollarSignIcon, LayoutDashboard, BookOpen, FolderPlus, Users, UserCog, Clock, Star, UserPlus, CalendarCheck } from "lucide-react"
+import { Roles } from "@/src/constants/roles"
+
+import type { FeatureKey } from "@/src/constants/features";
+
+export interface SidebarItem {
+  label: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+  feature?: FeatureKey; // ⭐ critical
+}
+
+
+export const sidebarItems: Record<Roles, SidebarItem[]> = {
+  
+  [Roles.ADMIN]: [
+    { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { label: "Bookings", href: "/dashboard/bookings", icon: BookOpen },
+  { label: "Create Category", href: "/dashboard/categories", icon: FolderPlus },
+  { label: "All Users", href: "/dashboard/users", icon: Users },
+  { label: "Manage Users", href: "/dashboard/manageUsers", icon: UserCog },
+
+  ],
+
+  [Roles.TUTOR]: [
+    {
+      label: "Dashboard",
+      href: "/dashboard/tutor",
+      icon: LayoutDashboard,
+      feature: "PROFILE"
+    },
+    {
+      label: "My Sessions",
+      href: "/dashboard/sessions",
+      icon: CalendarCheck,
+      feature: "SESSIONS"
+    },
+    {
+      label: "Create Profile",
+      href: "/dashboard/profile/create",
+      icon: UserPlus,
+      feature: "PROFILE"
+    },
+
+    {
+      label: "Update Profile",
+      href: "/dashboard/profile/update",
+      icon: UserCog,
+      feature: "PROFILE"
+    },
+    {
+      label: "Set Availability",
+      href: "/dashboard/availability",
+      icon: Clock,
+      feature: "AVAILABILITY"
+    },
+    {
+      label: "Ratings & Reviews",
+      href: "/dashboard/reviews",
+      icon: Star,
+      feature: "REVIEWS"
+    }
+
+
+
+  ],
+
+  [Roles.STUDENT]: [
+     {
+      label: "Dashboard",
+      href: "/dashboard",
+      icon: LayoutDashboard,
+      feature: "PROFILE"
+    },
+    {
+      label: "Your Bookings",
+      href: "/dashboard/bookings",
+      icon: BookOpen,
+      feature: "BOOKING"
+    },
+    {
+      label: "Leave Reviews",
+      href: "/dashboard/reviews",
+      icon: Star,
+      feature: "REVIEWS"
+    },
+    {
+      label: "Update Profile",
+      href: "/dashboard/profile",
+      icon: UserCog,
+      feature: "PROFILE"
+    }
+
+  ],
+}

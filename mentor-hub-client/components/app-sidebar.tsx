@@ -5,7 +5,7 @@ import { NavUser } from "@/components/nav-user"
 
 import { Roles } from "@/src/constants/roles"
 import Link from "next/link"
-import { sidebarItems } from "./sidebar/sidebar-items"
+import { sidebarItems } from "../src/constants/sidebar-items"
 
 interface AppSidebarProps {
   user: {

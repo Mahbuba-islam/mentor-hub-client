@@ -43,4 +43,20 @@ export const adminService = {
 
     return res.json();
   },
+
+  //Manage User Status 
+  manageUserStatus: async (userId: string, status: "ACTIVE" | "BANNED") => {
+    const cookieStore = await cookies();
+
+    const res = await fetch(`${env.API_URL}/admin/users/${userId}/status`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(),
+      },
+      body: JSON.stringify({ status }),
+    });
+
+    return res.json();
+  },
 };

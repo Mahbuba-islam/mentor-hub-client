@@ -14,7 +14,12 @@ export default function AdminDashboardPage() {
       <div className="grid gap-4 md:grid-cols-3">
         <Link href="/dashboard/users">
           <Button variant="outline" className="w-full justify-start">
-            Manage Users
+           View al users
+          </Button>
+        </Link>
+        <Link href="/dashboard/manageUsers">
+          <Button variant="outline" className="w-full justify-start">
+             Manage Users
           </Button>
         </Link>
         <Link href="/dashboard/bookings">
