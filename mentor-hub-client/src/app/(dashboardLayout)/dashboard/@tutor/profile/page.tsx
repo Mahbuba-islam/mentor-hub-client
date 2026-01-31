@@ -7,9 +7,9 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { Badge } from "@/components/ui/badge"
 
 export default async function TutorProfilePage() {
-  const { data: profile } = await tutorService.getTutorProfile()
+  const { data: profile } = await tutorService.getTutors()
   const { data: categories } = await tutorService.getCategories()
-
+  console.log('profile',profile)
   if (!profile) {
     return <div className="p-10 text-red-500">Profile not found</div>
   }

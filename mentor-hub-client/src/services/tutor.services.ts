@@ -20,8 +20,9 @@ export const tutorService = {
   async getTutorProfile() {
     try {
       const cookieHeader = getCookieHeader()
+console.log("cookie header", getCookieHeader())
 
-      const res = await fetch(`${API_URL}/tutors/profile`, {
+      const res = await fetch(`${API_URL}/tutors`, {
         headers: { Cookie: cookieHeader },
         cache: "no-store",
       })
@@ -61,6 +62,10 @@ export const tutorService = {
     }
   },
 
+
+
+ 
+  
   // ---------------------------------------------------------
   // GET TUTOR DASHBOARD DATA
   // ---------------------------------------------------------
@@ -79,6 +84,13 @@ export const tutorService = {
       return { data: null, error: { message: "Failed to fetch dashboard data" } }
     }
   },
+
+
+
+ 
+
+
+
 
   // ---------------------------------------------------------
   // UPDATE AVAILABILITY
@@ -123,7 +135,7 @@ export const tutorService = {
   },
 
   // ---------------------------------------------------------
-  // PUBLIC ENDPOINTS (unchanged)
+  // PUBLIC ENDPOINTS 
   // ---------------------------------------------------------
   async getTutors(params?: Record<string, string>) {
     try {
@@ -140,6 +152,15 @@ export const tutorService = {
       return { data: null, error: { message: "Failed to fetch tutors" } }
     }
   },
+
+
+
+
+
+  
+
+
+
 
   async getFeaturedTutors() {
     try {

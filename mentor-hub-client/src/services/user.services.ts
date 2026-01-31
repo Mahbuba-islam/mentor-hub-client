@@ -31,5 +31,24 @@ export const userService = {
       console.error(err)
       return { data: null, error: { message: "something went wrong" } }
     }
+
+
+    
+
   },
+
+async getAllUsers() {
+    try {
+      const res = await fetch(`${env.API_URL}/admin/getAllUsers`, {
+        next: { tags: ["users"] },
+      })
+      const data = await res.json()
+      return { data, error: null }
+    } catch (err) {
+      return { data: null, error: { message: "Failed to fetch users" } }
+    }
+  },
+
+
+   
 }
