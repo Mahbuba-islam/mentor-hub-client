@@ -123,7 +123,7 @@ getAvailability: async () => {
   getRatingsAndReviews: async () => {
     const cookieStore = await cookies();
 
-    const res = await fetch(`${env.API_URL}/tutor/reviews`, {
+    const res = await fetch(`${env.API_URL}/tutors/reviews`, {
       headers: {
         Cookie: cookieStore.toString(),
       },
