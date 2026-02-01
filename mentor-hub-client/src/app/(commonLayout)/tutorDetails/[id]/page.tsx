@@ -1,4 +1,5 @@
 import { tutorService } from "@/src/services/tutor.services"
+import BookSessionModal from "./BookSessionModal";
 
 export default async function TutorDetails({ params }: { params: { id: string } }) {
   const { id } = await params
@@ -74,16 +75,15 @@ export default async function TutorDetails({ params }: { params: { id: string } 
       </div>
 
       {/* CTA */}
-      <div className="p-6 border border-[#d1d7dc] rounded-lg bg-white shadow-sm flex justify-between items-center">
+     <div className="p-6 border rounded-lg bg-white shadow-sm flex justify-between items-center">
         <div>
-          <h3 className="text-lg font-semibold text-[#1c1d1f]">Ready to book a session?</h3>
-          <p className="text-sm text-[#6a6f73]">Contact the tutor to schedule your first lesson.</p>
+          <h3 className="text-lg font-semibold text-gray-900">Ready to book a session?</h3>
+          <p className="text-sm text-gray-500">Choose a date and time to book your lesson.</p>
         </div>
 
-        <button className="rounded-md bg-[#5624d0] text-white px-5 py-2 font-semibold hover:bg-[#3b1a99] transition">
-          Book Now
-        </button>
+        <BookSessionModal tutorId={data.data.id} tutorName={data.user?.name} />
       </div>
+
     </section>
   )
 }
