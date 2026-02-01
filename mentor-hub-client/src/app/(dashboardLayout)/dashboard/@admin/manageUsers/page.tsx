@@ -1,4 +1,3 @@
-// app/dashboard/admin/manage-users/page.tsx
 
 import { adminService } from "@/src/services/admin.services";
 import ManageUserTable from "./manageUserTable";

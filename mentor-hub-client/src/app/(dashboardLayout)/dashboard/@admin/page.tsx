@@ -1,42 +1,87 @@
-
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+
+import {
+  Users,
+  UserCog,
+  BookOpen,
+  FolderKanban,
+  LayoutDashboard
+} from "lucide-react"
 
 export default function AdminDashboardPage() {
   return (
-    <div className="space-y-8 p-4 md:p-6">
+    <div className="space-y-8 p-4 md:p-8">
+      {/* Header */}
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
+          <LayoutDashboard className="w-7 h-7 text-primary" />
+          Admin Dashboard
+        </h1>
       </div>
 
-     
-
-      <div className="grid gap-4 md:grid-cols-3">
+      {/* Grid Actions */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        
         <Link href="/dashboard/users">
-          <Button variant="outline" className="w-full justify-start">
-           View al users
-          </Button>
+          <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
+            <div className="flex items-center gap-4">
+              <Users className="w-10 h-10 text-primary group-hover:scale-110 transition" />
+              <div>
+                <h2 className="text-lg font-semibold">View All Users</h2>
+                <p className="text-sm text-gray-500">See every registered user</p>
+              </div>
+            </div>
+          </div>
         </Link>
+
         <Link href="/dashboard/manageUsers">
-          <Button variant="outline" className="w-full justify-start">
-             Manage Users
-          </Button>
+          <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
+            <div className="flex items-center gap-4">
+              <UserCog className="w-10 h-10 text-primary group-hover:scale-110 transition" />
+              <div>
+                <h2 className="text-lg font-semibold">Manage Users</h2>
+                <p className="text-sm text-gray-500">Ban, unban, update status</p>
+              </div>
+            </div>
+          </div>
         </Link>
+
         <Link href="/dashboard/bookings">
-          <Button variant="outline" className="w-full justify-start">
-            View Bookings
-          </Button>
+          <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
+            <div className="flex items-center gap-4">
+              <BookOpen className="w-10 h-10 text-primary group-hover:scale-110 transition" />
+              <div>
+                <h2 className="text-lg font-semibold">View Bookings</h2>
+                <p className="text-sm text-gray-500">All platform bookings</p>
+              </div>
+            </div>
+          </div>
         </Link>
+
         <Link href="/dashboard/categories">
-          <Button variant="outline" className="w-full justify-start">
-            Manage Categories
-          </Button>
+          <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
+            <div className="flex items-center gap-4">
+              <FolderKanban className="w-10 h-10 text-primary group-hover:scale-110 transition" />
+              <div>
+                <h2 className="text-lg font-semibold">Manage Categories</h2>
+                <p className="text-sm text-gray-500"> Edit and delete categories</p>
+              </div>
+            </div>
+          </div>
         </Link>
+        <Link href="/dashboard/categories/createCategories">
+          <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
+            <div className="flex items-center gap-4">
+              <FolderKanban className="w-10 h-10 text-primary group-hover:scale-110 transition" />
+              <div>
+                <h2 className="text-lg font-semibold">Manage Categories</h2>
+                <p className="text-sm text-gray-500">Create Categories</p>
+              </div>
+            </div>
+          </div>
+        </Link>
+
       </div>
     </div>
   )
 }
-
-
-
-

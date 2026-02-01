@@ -1,11 +1,9 @@
 import { AppSidebar } from "@/components/app-sidebar"
 import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import { authClient } from "@/lib/auth-client"
 
 import { Roles } from "@/src/constants/roles"
 import { userService } from "@/src/services/user.services"
-import { headers } from "next/headers"
 
 export default async function DashboardLayout({
   admin,

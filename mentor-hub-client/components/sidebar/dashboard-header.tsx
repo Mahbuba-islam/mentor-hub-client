@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 
+import { LogOutButton } from "../LogOutButton"
+
 interface DashboardHeaderProps {
   user: {
     name: string
@@ -55,9 +57,12 @@ export default function DashboardHeader({ user }: DashboardHeaderProps) {
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem className="text-red-600">
-            Logout
-          </DropdownMenuItem>
+         <DropdownMenuItem
+ 
+>
+  <LogOutButton/>
+</DropdownMenuItem>
+
         </DropdownMenuContent>
       </DropdownMenu>
     </header>

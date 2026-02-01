@@ -25,7 +25,7 @@ export const sidebarItems: Record<Roles, SidebarItem[]> = {
   [Roles.TUTOR]: [
     {
       label: "Dashboard",
-      href: "/dashboard/tutor",
+      href: "/dashboard",
       icon: LayoutDashboard,
       feature: "PROFILE"
     },

@@ -15,6 +15,9 @@ export default function Sidebar({ user } :{user:User}) {
           {item.label}
         </a>
       ))}
+      
+
+
     </div>
   );
 }

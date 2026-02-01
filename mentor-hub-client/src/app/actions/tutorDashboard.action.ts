@@ -1,0 +1,85 @@
+"use server";
+
+import { revalidateTag } from "next/cache";
+import {
+  tutorService,
+  TutorProfileData,
+  AvailabilitySlot,
+} from "@/src/services/tutorDashboard.services";
+
+// -----------------------------
+// CREATE TUTOR PROFILE
+// -----------------------------
+export const createTutorProfileAction = async (data: TutorProfileData) => {
+  // Convert frontend fields to match Prisma model
+  const payload = {
+    bio: data.bio,
+    price: data.price,
+    categoryId: data.categoryId,
+    subject: data.subject,   // ✔ FIXED: Prisma expects subject[]
+  };
+
+  const res = await tutorService.createTutorProfile(payload);
+
+  revalidateTag("tutor-profile", "page");
+
+  return res;
+};
+// -----------------------------
+// GET TUTOR PROFILE
+// -----------------------------
+export const getTutorProfileAction = async () => {
+  return await tutorService.getTutorProfile();
+};
+
+// -----------------------------
+// UPDATE TUTOR PROFILE
+// -----------------------------
+export const updateTutorProfileAction = async (data: TutorProfileData) => {
+  const res = await tutorService.updateTutorProfile(data);
+
+  revalidateTag("tutor-profile", "page");
+
+  return res;
+};
+
+
+
+// GET TUTOR AVAILABILITY
+export const getTutorAvailabilityAction = async () => {
+  const res = await tutorService.getAvailability();
+  return res;
+};
+
+
+
+
+
+
+// -----------------------------
+// SET AVAILABILITY SLOTS
+// -----------------------------
+export const setAvailabilityAction = async (slots: {
+  date: string;
+  timeSlots: string[];
+}) => {
+  const res = await tutorService.setAvailability(slots);
+
+  revalidateTag("tutor-availability", "page");
+
+  return res;
+};
+
+// -----------------------------
+// GET TEACHING SESSIONS
+// -----------------------------
+export const getTeachingSessionsAction = async () => {
+  return await tutorService.getSessions();
+};
+
+// -----------------------------
+// GET RATINGS & REVIEWS
+// -----------------------------
+export const getRatingsAndReviewsAction = async () => {
+  return await tutorService.getRatingsAndReviews();
+};

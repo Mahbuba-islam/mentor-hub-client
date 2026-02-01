@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createCategoryAction } from "@/src/app/actions/category.action";
 import { useState } from "react";
-
 import { toast } from "sonner";
 
 export default function CreateCategoryFormClient() {
@@ -26,13 +25,19 @@ export default function CreateCategoryFormClient() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-4">
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col md:flex-row gap-4 bg-white p-5 rounded-xl shadow-sm border"
+    >
       <Input
-        placeholder="Category name"
+        placeholder="Enter category name"
         value={name}
         onChange={(e) => setName(e.target.value)}
+        className="flex-1"
       />
-      <Button type="submit">Create</Button>
+      <Button type="submit" className="w-full md:w-auto">
+        Create
+      </Button>
     </form>
   );
 }

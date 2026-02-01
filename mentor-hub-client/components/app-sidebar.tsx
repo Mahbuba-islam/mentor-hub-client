@@ -27,9 +27,20 @@ export function AppSidebar({ user }: AppSidebarProps) {
 console.log('app-sidebar user',user);
   return (
     <Sidebar collapsible="offcanvas">
-      <SidebarHeader>
-        <div className="px-4 py-3 text-xl font-semibold">MentorHub</div>
-      </SidebarHeader>
+     <SidebarHeader>
+  <Link href="/">
+    <div className="px-4 py-3 text-xl font-semibold cursor-pointer">
+      MentorHub
+    </div>
+  </Link>
+
+  <Link href="/" className="px-4">
+    <p className="text-xs text-gray-500 hover:text-gray-700 transition">
+      Back to home page
+    </p>
+  </Link>
+</SidebarHeader>
+
 
       <SidebarContent>
         <nav className="space-y-1 px-2">

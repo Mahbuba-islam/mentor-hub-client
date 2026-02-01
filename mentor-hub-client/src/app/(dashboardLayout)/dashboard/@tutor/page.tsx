@@ -1,67 +1,81 @@
-// import BookingTable from "@/components/dashboard/bookingTable";
+import Link from "next/link"
 
-// export default function TutorDashboard() {
-//   return (
-//     <div className="space-y-6">
-//       <h1 className="text-2xl font-bold">Tutor Dashboard</h1>
-//       <BookingTable type="tutor" />
-//     </div>
-//   )
-// }
+import {
+  UserCog,
+  CalendarCheck,
+  BookOpen,
+  Star,
+  LayoutDashboard
+} from "lucide-react"
 
-// const {data} = await userService.getSession()
-//     console.log("dashboard layout", data);
-//     const user = data.user
-
-
-import { tutorService } from "@/src/services/tutor.services"
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-
-export default async function TutorDashboardHome() {
-  const { data } = await (tutorService.getTutors())
-console.log('tutor dashboard',data);
-  // const {   reviews, rating, totalReviews } = data
-
+export default function TutorDashboardPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-8 p-4 md:p-8">
       
-      <h1 className="text-3xl font-bold">Tutor Dashboard</h1>
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
+          <LayoutDashboard className="w-7 h-7 text-primary" />
+          Tutor Dashboard
+        </h1>
+      </div>
 
-      {/* Stats */}
-      {/* <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card><CardContent className="p-4"><p>Total Sessions</p><h2 className="text-2xl font-bold">{pastSessions.length + upcomingSessions.length}</h2></CardContent></Card>
-        <Card><CardContent className="p-4"><p>Upcoming</p><h2 className="text-2xl font-bold">{upcomingSessions.length}</h2></CardContent></Card>
-        <Card><CardContent className="p-4"><p>Rating</p><h2 className="text-2xl font-bold">{rating}</h2></CardContent></Card>
-        <Card><CardContent className="p-4"><p>Total Reviews</p><h2 className="text-2xl font-bold">{totalReviews}</h2></CardContent></Card>
-      </div> */}
+     
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
-      {/* Today's Sessions */}
-      {/* <Card>
-        <CardHeader><CardTitle>Today Sessions</CardTitle></CardHeader>
-        <CardContent>
-          {upcomingSessions.length === 0 && <p>No sessions today</p>}
-          {upcomingSessions.map((s: any) => (
-            <div key={s.id} className="border p-3 rounded mb-2">
-              <p className="font-medium">{s.student.name}</p>
-              <p>{new Date(s.date).toLocaleString()}</p>
+        {/* Create / Update Tutor Profile */}
+        <Link href="/dashboard/profile">
+          <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
+            <div className="flex items-center gap-4">
+              <UserCog className="w-10 h-10 text-primary group-hover:scale-110 transition" />
+              <div>
+                <h2 className="text-lg font-semibold">Tutor Profile</h2>
+                <p className="text-sm text-gray-500">Create or update your profile</p>
+              </div>
             </div>
-          ))}
-        </CardContent>
-      </Card> */}
+          </div>
+        </Link>
 
-      {/* Recent Reviews */}
-      {/* <Card>
-        <CardHeader><CardTitle>Recent Reviews</CardTitle></CardHeader>
-        <CardContent>
-          {reviews.slice(0, 3).map((r: any) => (
-            <div key={r.id} className="border p-3 rounded mb-2">
-              <p className="font-medium">{r.student.name}</p>
-              <p className="text-sm text-muted-foreground">{r.comment}</p>
+        {/* Set Availability Slots */}
+        <Link href="/dashboard/availability">
+          <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
+            <div className="flex items-center gap-4">
+              <CalendarCheck className="w-10 h-10 text-primary group-hover:scale-110 transition" />
+              <div>
+                <h2 className="text-lg font-semibold">Availability</h2>
+                <p className="text-sm text-gray-500">Set your available time slots</p>
+              </div>
             </div>
-          ))}
-        </CardContent>
-      </Card> */}
+          </div>
+        </Link>
 
+        {/* View Teaching Sessions */}
+        <Link href="/dashboard/sessions">
+          <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
+            <div className="flex items-center gap-4">
+              <BookOpen className="w-10 h-10 text-primary group-hover:scale-110 transition" />
+              <div>
+                <h2 className="text-lg font-semibold">Teaching Sessions</h2>
+                <p className="text-sm text-gray-500">View all your sessions</p>
+              </div>
+            </div>
+          </div>
+        </Link>
+
+        {/* Ratings & Reviews */}
+        <Link href="/dashboard/reviews">
+          <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
+            <div className="flex items-center gap-4">
+              <Star className="w-10 h-10 text-primary group-hover:scale-110 transition" />
+              <div>
+                <h2 className="text-lg font-semibold">Ratings & Reviews</h2>
+                <p className="text-sm text-gray-500">See student feedback</p>
+              </div>
+            </div>
+          </div>
+        </Link>
+
+      </div>
     </div>
   )
 }
