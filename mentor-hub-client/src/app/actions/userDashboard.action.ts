@@ -33,6 +33,18 @@ export const bookSessionAction = async (payload: {
 };
 
 
+//update booking status
+
+// -----------------------------
+// COMPLETE BOOKING
+// -----------------------------
+export const completeBookingAction = async (bookingId: string) => {
+  const res = await studentService.completeBooking(bookingId);
+  revalidateTag("student-bookings", "page");
+  return res;
+};
+
+
 
 // -----------------------------
 // GET UPCOMING BOOKINGS

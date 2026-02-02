@@ -1,16 +1,7 @@
-import { cookies } from "next/headers"
-import { env } from "../types/env"
-import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
+import { cookies } from "next/headers";
+import { env } from "../types/env";
 
-const API_URL = env.API_URL
-
-function getCookieHeader() {
-  const cookieStore = cookies() as unknown as ReadonlyRequestCookies
-  return cookieStore
-    .getAll()
-    .map(c => `${c.name}=${c.value}`)
-    .join("; ")
-}
+const API_URL = env.API_URL;
 
 export const studentService = {
   // ---------------------------------------------------------
@@ -18,17 +9,22 @@ export const studentService = {
   // ---------------------------------------------------------
   async getStudentProfile() {
     try {
-      const cookieHeader = getCookieHeader()
+      const cookieStore = await cookies();
 
-      const res = await fetch(`${API_URL}/students/profile`, {
-        headers: { Cookie: cookieHeader },
+      const res = await fetch(`${API_URL}/student/profile`, {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
         cache: "no-store",
-      })
+      });
 
-      const data = await res.json()
-      return { data, error: null }
+      const data = await res.json();
+      return { data, error: null };
     } catch (err) {
-      return { data: null, error: { message: "Failed to fetch student profile" } }
+      return {
+        data: null,
+        error: { message: "Failed to fetch student profile" },
+      };
     }
   },
 
@@ -36,68 +32,113 @@ export const studentService = {
   // UPDATE STUDENT PROFILE
   // ---------------------------------------------------------
   async updateStudentProfile(payload: {
-    name?: string
-    email?: string
-    phone?: string
+    name?: string;
+    email?: string;
+    phone?: string;
   }) {
     try {
-      const cookieHeader = getCookieHeader()
+      const cookieStore = await cookies();
 
-      const res = await fetch(`${API_URL}/students/update-profile`, {
+      const res = await fetch(`${API_URL}/student/update-profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Cookie: cookieHeader,
+          Cookie: cookieStore.toString(),
         },
         body: JSON.stringify(payload),
-      })
+      });
 
-      const data = await res.json()
-      return { data, error: null }
+      const data = await res.json();
+      return { data, error: null };
     } catch (err) {
-      return { data: null, error: { message: "Failed to update student profile" } }
+      return {
+        data: null,
+        error: { message: "Failed to update student profile" },
+      };
     }
   },
 
   // ---------------------------------------------------------
-  // BOOK A SESSION
+  // BOOK A SESSION 
   // ---------------------------------------------------------
- async bookSession(payload: {
+  async bookSession(payload: {
     tutorId: string;
     date: string;
     startTime: string;
     endTime: string;
   }) {
+    try {
+      const cookieStore = await cookies();
+
+      const res = await fetch(`${API_URL}/bookings`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
+        },
+        body: JSON.stringify(payload),
+      });
+
+      return await res.json(); 
+    } catch (err) {
+      return {
+        success: false,
+        message: "Failed to book session",
+      };
+    }
+  },
+
+
+
+// ---------------------------------------------------------
+// update booking status
+// ---------------------------------------------------------
+async completeBooking(bookingId: string) {
+  try {
     const cookieStore = await cookies();
 
-    const res = await fetch(`${API_URL}/bookings`, {
-      method: "POST",
+    const res = await fetch(`${API_URL}/student/bookings/${bookingId}/complete`, {
+      method: "PUT",
       headers: {
-        "Content-Type": "application/json",
-        Cookie: cookieStore.toString(), // ⭐ same as tutor availability
+        Cookie: cookieStore.toString(),
       },
-      body: JSON.stringify(payload),
     });
 
-    return res.json();
-  },
+    const data = await res.json();
+    return { data, error: null };
+  } catch (err) {
+    return {
+      data: null,
+      error: { message: "Failed to complete booking" },
+    };
+  }
+},
+
+
+
+
 
   // ---------------------------------------------------------
   // GET UPCOMING BOOKINGS
   // ---------------------------------------------------------
   async getUpcomingBookings() {
     try {
-      const cookieHeader = getCookieHeader()
+      const cookieStore = await cookies();
 
-      const res = await fetch(`${API_URL}/students/bookings/upcoming`, {
-        headers: { Cookie: cookieHeader },
+      const res = await fetch(`${API_URL}/student/bookings/upcoming`, {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
         cache: "no-store",
-      })
+      });
 
-      const data = await res.json()
-      return { data, error: null }
+      const data = await res.json();
+      return { data, error: null };
     } catch (err) {
-      return { data: null, error: { message: "Failed to fetch upcoming bookings" } }
+      return {
+        data: null,
+        error: { message: "Failed to fetch upcoming bookings" },
+      };
     }
   },
 
@@ -106,50 +147,52 @@ export const studentService = {
   // ---------------------------------------------------------
   async getPastBookings() {
     try {
-      const cookieHeader = getCookieHeader()
+      const cookieStore = await cookies();
 
-      const res = await fetch(`${API_URL}/bookings/`, {
-        headers: { Cookie: cookieHeader },
+      const res = await fetch(`${API_URL}/student/bookings/past`, {
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
         cache: "no-store",
-      })
+      });
 
-      const data = await res.json()
-      return { data, error: null }
+      const data = await res.json();
+      return { data, error: null };
     } catch (err) {
-      return { data: null, error: { message: "Failed to fetch past bookings" } }
+      return {
+        data: null,
+        error: { message: "Failed to fetch past bookings" },
+      };
     }
   },
 
-
-
-
-
-
-  
   // ---------------------------------------------------------
   // LEAVE REVIEW
   // ---------------------------------------------------------
   async leaveReview(payload: {
-    bookingId: string
-    rating: number
-    comment?: string
+    bookingId: string;
+    rating: number;
+    comment?: string;
   }) {
     try {
-      const cookieHeader = getCookieHeader()
+      const cookieStore = await cookies();
 
-      const res = await fetch(`${API_URL}/students/reviews`, {
+      const res = await fetch(`${API_URL}/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Cookie: cookieHeader,
+          Cookie: cookieStore.toString(),
         },
         body: JSON.stringify(payload),
-      })
+      });
 
-      const data = await res.json()
-      return { data, error: null }
+      const data = await res.json();
+      return { data, error: null };
     } catch (err) {
-      return { data: null, error: { message: "Failed to submit review" } }
+      return {
+        data: null,
+        error: { message: "Failed to submit review" },
+      };
     }
   },
-}
+};

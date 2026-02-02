@@ -118,7 +118,7 @@ const [errorMessage, setErrorMessage] = useState("");
       <SuccessModal
         open={successOpen}
         onClose={() => setSuccessOpen(false)}
-        onDashboard={() => router.push("/dashboard/book-session")}
+        onDashboard={() => router.push("/dashboard/bookSession")}
         onHome={() => router.push("/")}
       />
       <ErrorModal

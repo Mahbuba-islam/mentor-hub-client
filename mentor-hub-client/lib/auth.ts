@@ -1,15 +1,7 @@
-// import { betterAuth } from "better-auth";
-
 import { betterAuth } from "better-auth";
 
-
-// export const auth = betterAuth({
-//   baseURL: "http://localhost:5000",
-// })
-
-
 export const auth = betterAuth({
-  baseURL: process.env.AUTH_URL,
+  baseURL: process.env.AUTH_URL, // Example: http://localhost:5000
 
   user: {
     modelName: "User",
@@ -31,4 +23,4 @@ export const auth = betterAuth({
     maxAge: 60 * 60 * 24 * 30, // 30 days
     freshAge: 60 * 60 * 24,    // 1 day
   },
-})
+});

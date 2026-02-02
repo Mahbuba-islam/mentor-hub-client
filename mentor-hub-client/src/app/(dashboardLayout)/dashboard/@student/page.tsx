@@ -50,7 +50,7 @@ export default function StudentDashboardPage() {
         </Link>
 
         {/* Upcoming Sessions */}
-        <Link href="/dashboard/book-session">
+        <Link href="/dashboard/bookSession">
           <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
             <div className="flex items-center gap-4">
               <CalendarCheck className="w-10 h-10 text-primary group-hover:scale-110 transition" />
@@ -63,7 +63,7 @@ export default function StudentDashboardPage() {
         </Link>
 
         {/* Past Sessions */}
-        <Link href="/dashboard/book-session">
+        <Link href="/dashboard/bookSession">
           <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
             <div className="flex items-center gap-4">
               <Clock className="w-10 h-10 text-primary group-hover:scale-110 transition" />
@@ -76,13 +76,13 @@ export default function StudentDashboardPage() {
         </Link>
 
         {/* My Reviews */}
-        <Link href="/student/reviews">
+        <Link href="/dashboard/bookSession">
           <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
             <div className="flex items-center gap-4">
               <MessageSquare className="w-10 h-10 text-primary group-hover:scale-110 transition" />
               <div>
-                <h2 className="text-lg font-semibold">My Reviews</h2>
-                <p className="text-sm text-gray-500">Manage your given reviews</p>
+                <h2 className="text-lg font-semibold">Leave Reviews</h2>
+                <p className="text-sm text-gray-500">Share your feedback</p>
               </div>
             </div>
           </div>
