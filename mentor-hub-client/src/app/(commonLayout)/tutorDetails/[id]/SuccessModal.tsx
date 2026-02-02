@@ -1,39 +1,55 @@
 "use client";
 
-export default function SuccessModal({ open, onClose, onDashboard, onHome }) {
-  if (!open) return null;
+import * as Dialog from "@radix-ui/react-dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { CheckCircle } from "lucide-react";
 
+export default function SuccessModal({
+  open,
+  onClose,
+  onDashboard,
+  onHome,
+}) {
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-xl w-full max-w-sm shadow-lg space-y-4 text-center">
-        <h2 className="text-2xl font-bold text-green-600">Booking Successful 🎉</h2>
-        <p className="text-gray-600 text-sm">
-          Your session has been booked successfully. What would you like to do next?
-        </p>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 bg-black/40 z-50" />
 
-        <div className="flex flex-col gap-3 mt-4">
-          <button
-            onClick={onDashboard}
-            className="w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700 transition"
-          >
-            Go to Dashboard
-          </button>
+        <Dialog.Content className="fixed z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+          bg-white rounded-xl p-6 w-full max-w-sm shadow-lg space-y-4">
 
-          <button
-            onClick={onHome}
-            className="w-full bg-gray-200 text-gray-800 py-2 rounded-lg font-semibold hover:bg-gray-300 transition"
-          >
-            Go to Home
-          </button>
-        </div>
+          {/* Hidden title for accessibility */}
+          <VisuallyHidden>
+            <Dialog.Title>Booking Successful</Dialog.Title>
+          </VisuallyHidden>
 
-        <button
-          onClick={onClose}
-          className="text-xs text-gray-500 mt-2 hover:underline"
-        >
-          Close
-        </button>
-      </div>
-    </div>
+          {/* Visible Title */}
+          <div className="flex items-center gap-2 text-green-600 text-xl font-semibold">
+            <CheckCircle className="w-6 h-6" />
+            <span>Booking Successful</span>
+          </div>
+
+          <p className="text-gray-600">
+            Your tutoring session has been booked successfully.
+          </p>
+
+          <div className="flex flex-col gap-3 mt-4">
+            <button
+              onClick={onDashboard}
+              className="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition"
+            >
+              Go to Dashboard
+            </button>
+
+            <button
+              onClick={onHome}
+              className="w-full border py-2 rounded-md hover:bg-gray-100 transition"
+            >
+              Go to Home
+            </button>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }

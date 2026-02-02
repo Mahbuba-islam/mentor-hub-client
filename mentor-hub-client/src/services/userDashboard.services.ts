@@ -62,29 +62,24 @@ export const studentService = {
   // ---------------------------------------------------------
   // BOOK A SESSION
   // ---------------------------------------------------------
-  async bookSession(payload: {
-    tutorId: string
-    date: string
-    startTime: string
-    endTime: string
+ async bookSession(payload: {
+    tutorId: string;
+    date: string;
+    startTime: string;
+    endTime: string;
   }) {
-    try {
-      const cookieHeader = getCookieHeader()
+    const cookieStore = await cookies();
 
-      const res = await fetch(`${API_URL}/students/book-session`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieHeader,
-        },
-        body: JSON.stringify(payload),
-      })
+    const res = await fetch(`${API_URL}/bookings`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: cookieStore.toString(), // ⭐ same as tutor availability
+      },
+      body: JSON.stringify(payload),
+    });
 
-      const data = await res.json()
-      return { data, error: null }
-    } catch (err) {
-      return { data: null, error: { message: "Failed to book session" } }
-    }
+    return res.json();
   },
 
   // ---------------------------------------------------------
@@ -113,7 +108,7 @@ export const studentService = {
     try {
       const cookieHeader = getCookieHeader()
 
-      const res = await fetch(`${API_URL}/students/bookings/past`, {
+      const res = await fetch(`${API_URL}/bookings/`, {
         headers: { Cookie: cookieHeader },
         cache: "no-store",
       })
@@ -125,6 +120,12 @@ export const studentService = {
     }
   },
 
+
+
+
+
+
+  
   // ---------------------------------------------------------
   // LEAVE REVIEW
   // ---------------------------------------------------------

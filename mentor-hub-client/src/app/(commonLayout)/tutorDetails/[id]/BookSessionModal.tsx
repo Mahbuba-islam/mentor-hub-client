@@ -1,14 +1,17 @@
 "use client";
 
 import { useState } from "react";
-
 import { useRouter } from "next/navigation";
 import SuccessModal from "./SuccessModal";
 import { bookSessionAction } from "@/src/app/actions/userDashboard.action";
+import ErrorModal from "./ErrorModal";
 
 export default function BookSessionModal({ tutorId, tutorName }) {
   const [open, setOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
+  const [errorOpen, setErrorOpen] = useState(false);
+const [errorMessage, setErrorMessage] = useState("");
+
   const [date, setDate] = useState("");
   const [slot, setSlot] = useState("");
   const router = useRouter();
@@ -19,30 +22,37 @@ export default function BookSessionModal({ tutorId, tutorName }) {
   ];
 
   const handleBooking = async () => {
-    if (!date || !slot) return;
+  if (!date || !slot) return;
 
-    const res = await bookSessionAction({
-      tutorId,
-      date,
-      startTime: slot,
-      endTime: slot,
-    });
+  const res = await bookSessionAction({
+    tutorId,
+    date,
+    startTime: slot,
+    endTime: slot,
+  });
 
-    if (res?.data?.error) {
-      alert("Booking failed");
-      return;
-    }
+  console.log("BOOKING RESPONSE:", res);
 
-    // Close booking modal
-    setOpen(false);
 
-    // Open success modal
-    setSuccessOpen(true);
-  };
+  
+
+
+
+
+  if (!res?.success) {
+    // ⭐ Custom error message
+    setErrorMessage(res?.message || "Maybe you already booked this session");
+    setErrorOpen(true);
+    return;
+  }
+
+  setOpen(false);
+  setSuccessOpen(true);
+};
+
 
   return (
     <>
-      {/* BOOK NOW BUTTON */}
       <button
         onClick={() => setOpen(true)}
         className="rounded-md bg-purple-600 text-white px-5 py-2 font-semibold hover:bg-purple-700 transition"
@@ -50,7 +60,6 @@ export default function BookSessionModal({ tutorId, tutorName }) {
         Book Now
       </button>
 
-      {/* BOOKING MODAL */}
       {open && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-xl w-full max-w-md space-y-4 shadow-lg">
@@ -106,13 +115,18 @@ export default function BookSessionModal({ tutorId, tutorName }) {
         </div>
       )}
 
-      {/* SUCCESS MODAL */}
       <SuccessModal
         open={successOpen}
         onClose={() => setSuccessOpen(false)}
-        onDashboard={() => router.push("/dashboard/bookings")}
+        onDashboard={() => router.push("/dashboard/book-session")}
         onHome={() => router.push("/")}
       />
+      <ErrorModal
+  open={errorOpen}
+  onClose={() => setErrorOpen(false)}
+  message={errorMessage}
+/>
+
     </>
   );
 }

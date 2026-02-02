@@ -19,14 +19,20 @@ export const updateStudentProfileAction = async (data: any) => {
   return res
 }
 
-// -----------------------------
+
 // BOOK SESSION
-// -----------------------------
-export const bookSessionAction = async (payload: any) => {
-  const res = await studentService.bookSession(payload)
-  revalidateTag("student-bookings", "page")
-  return res
-}
+export const bookSessionAction = async (payload: {
+  tutorId: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+}) => {
+  const res = await studentService.bookSession(payload);
+  revalidateTag("student-bookings", "page");
+  return res;
+};
+
+
 
 // -----------------------------
 // GET UPCOMING BOOKINGS
@@ -50,3 +56,5 @@ export const leaveReviewAction = async (payload: any) => {
   revalidateTag("student-reviews", "page")
   return res
 }
+
+

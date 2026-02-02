@@ -50,7 +50,7 @@ export default function StudentDashboardPage() {
         </Link>
 
         {/* Upcoming Sessions */}
-        <Link href="/student/bookings/upcoming">
+        <Link href="/dashboard/book-session">
           <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
             <div className="flex items-center gap-4">
               <CalendarCheck className="w-10 h-10 text-primary group-hover:scale-110 transition" />
@@ -63,7 +63,7 @@ export default function StudentDashboardPage() {
         </Link>
 
         {/* Past Sessions */}
-        <Link href="/student/bookings/past">
+        <Link href="/dashboard/book-session">
           <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
             <div className="flex items-center gap-4">
               <Clock className="w-10 h-10 text-primary group-hover:scale-110 transition" />
