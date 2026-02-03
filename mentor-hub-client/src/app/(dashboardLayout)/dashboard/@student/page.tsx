@@ -89,13 +89,13 @@ export default function StudentDashboardPage() {
         </Link>
 
         {/* Profile */}
-        <Link href="/student/profile">
+        <Link href="/dashboard/manageProfile">
           <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
             <div className="flex items-center gap-4">
               <User className="w-10 h-10 text-primary group-hover:scale-110 transition" />
               <div>
-                <h2 className="text-lg font-semibold">My Profile</h2>
-                <p className="text-sm text-gray-500">Update your personal info</p>
+                <h2 className="text-lg font-semibold">Manage your profile</h2>
+                <p className="text-sm text-gray-500">Update and delete</p>
               </div>
             </div>
           </div>

@@ -23,16 +23,17 @@ useEffect(() => {
 }, [])
 
 
+ const mentorHubMenu = [
+  { title: "Home", url: "/" },
+  { title: "Find Tutors", url: "/tutors" },
+  { title: "Become a Tutor", url: "/signup" },
+  { title: "All Tutors", url: "/tutors" },
+  { title: "About", url: "/about" },
+];
 
-
-  const mentorHubMenu = [
-    { title: "Home", url: "/" },
-    { title: "Find Tutors", url: "/tutors" },
-    { title: "Become a Tutor", url: "/become-tutor" },
-    { title: "Blogs", url: "/blogs" },
-    { title: "About", url: "/about" },
-    { title: "Dashboard", url: "/dashboard" },
-  ];
+if (session) {
+  mentorHubMenu.push({ title: "Dashboard", url: "/dashboard" });
+}
 
   return (
     <header className="w-full border-b bg-background">
@@ -40,18 +41,31 @@ useEffect(() => {
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.svg" alt="MentorHub Logo" className="h-8 w-8 dark:invert" />
-          <span className="text-xl font-bold tracking-tight">MentorHub</span>
+          
+          <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent">
+  MentorHub
+</span>
+
         </Link>
 
         {/* Desktop Menu */}
-        <nav className="hidden lg:flex items-center gap-6">
-          {mentorHubMenu.map((item) => (
-            <Link key={item.title} href={item.url} className="text-sm font-medium hover:text-primary">
-              {item.title}
-            </Link>
-          ))}
-        </nav>
+  <nav className="hidden lg:flex items-center gap-6">
+  {mentorHubMenu.map((item) => (
+    <Link
+      key={item.title}
+      href={item.url}
+      className="text-sm font-medium relative group"
+    >
+      <span className="group-hover:text-[#9a24d0] transition-colors duration-200">
+        {item.title}
+      </span>
+
+      <span className="absolute left-0 -bottom-1 h-[2px] w-0
+       bg-[#8e24d0] group-hover:w-full transition-all duration-300"></span>
+    </Link>
+  ))}
+</nav>
+
 
         {/* Desktop Right Side */}
         <div className="hidden lg:flex items-center gap-3">

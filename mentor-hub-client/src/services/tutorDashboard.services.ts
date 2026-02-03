@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { env } from "@/src/types/env";
 
 export interface TutorProfileData {
+  image: null;
   bio: string;
   price: number;
   categoryId: string;
@@ -14,6 +15,7 @@ export interface AvailabilitySlot {
   day: string;
   startTime: string;
   endTime: string;
+  
 }
 
 export const tutorService = {
@@ -33,7 +35,12 @@ export const tutorService = {
     return res.json();
   },
 
-  // GET TUTOR PROFILE (needed for update)
+
+
+
+
+
+  // GET TUTOR PROFILE 
   getTutorProfile: async () => {
     const cookieStore = await cookies();
 

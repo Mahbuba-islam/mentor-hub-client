@@ -7,16 +7,16 @@ import {
   AvailabilitySlot,
 } from "@/src/services/tutorDashboard.services";
 
-// -----------------------------
-// CREATE TUTOR PROFILE
-// -----------------------------
+
+
+
 export const createTutorProfileAction = async (data: TutorProfileData) => {
   // Convert frontend fields to match Prisma model
   const payload = {
     bio: data.bio,
     price: data.price,
     categoryId: data.categoryId,
-    subject: data.subject,   // ✔ FIXED: Prisma expects subject[]
+    subject: data.subject,   
   };
 
   const res = await tutorService.createTutorProfile(payload);
@@ -25,6 +25,14 @@ export const createTutorProfileAction = async (data: TutorProfileData) => {
 
   return res;
 };
+
+
+
+
+
+
+
+
 // -----------------------------
 // GET TUTOR PROFILE
 // -----------------------------

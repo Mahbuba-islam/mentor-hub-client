@@ -2,19 +2,27 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { updateStudentProfileAction } from "@/src/app/actions/userDashboard.action";
 
 export default function UpdateProfileModal({ open, onClose, profile, onUpdated }) {
-  const [name, setName] = useState(profile.name);
-  const [phone, setPhone] = useState(profile.phone || "");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+
+  // ⭐ Reset state when modal opens
+  useEffect(() => {
+    if (open && profile) {
+      setName(profile.name || "");
+      setPhone(profile.phone || "");
+    }
+  }, [open, profile]);
 
   const handleSubmit = async () => {
     const res = await updateStudentProfileAction({ name, phone });
 
-    if (res?.success) {
-      onUpdated(res.data); // update UI instantly
-      onClose();
+    if (res?.success && res.data) {
+      onUpdated(res.data); // ⭐ send updated profile to parent
+      onClose();            // ⭐ close modal
     } else {
       alert("Something went wrong");
     }
@@ -30,7 +38,6 @@ export default function UpdateProfileModal({ open, onClose, profile, onUpdated }
           -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-xl 
           w-full max-w-sm space-y-4 shadow-lg"
         >
-          {/* Required for accessibility */}
           <VisuallyHidden>
             <Dialog.Title>Update Profile</Dialog.Title>
           </VisuallyHidden>

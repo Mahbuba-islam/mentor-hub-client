@@ -15,14 +15,16 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="my-20 border-t bg-[#F7F9FA] text-[#1C1D1F]">
+    <footer className="mt-5 border-t bg-[#F7F9FA] text-[#1C1D1F]">
       <div className="mx-auto max-w-7xl px-6 py-12">
         
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
           
           {/* Brand */}
           <div>
-            <h2 className="text-2xl font-bold text-[#5624D0]">MentorHub</h2>
+            <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent">
+  MentorHub
+</span>
             <p className="mt-3 text-sm text-[#6A6F73]">
               Learn, grow, and connect with expert mentors worldwide.
             </p>

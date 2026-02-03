@@ -2,24 +2,12 @@
 
 import { useState } from "react";
 import UpdateProfileModal from "./UpdateProfileModal";
+import DeleteAccountModal from "./DeleteAccountModal";
 
 export default function ManageProfilePage({ user }) {
   const [open, setOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [profile, setProfile] = useState(user);
-
-  const handleDelete = async () => {
-    const confirmDelete = confirm("Are you sure you want to delete your account?");
-    if (!confirmDelete) return;
-
-    const res = await deleteAccountActions();
-
-    if (res?.success) {
-      alert("Account deleted successfully");
-      window.location.href = "/";
-    } else {
-      alert("Something went wrong");
-    }
-  };
 
   return (
     <div className="space-y-8">
@@ -55,7 +43,7 @@ export default function ManageProfilePage({ user }) {
           </button>
 
           <button
-            onClick={handleDelete}
+            onClick={() => setDeleteOpen(true)}
             className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
           >
             Delete Account
@@ -68,6 +56,11 @@ export default function ManageProfilePage({ user }) {
         onClose={() => setOpen(false)}
         profile={profile}
         onUpdated={(updated) => setProfile(updated)}
+      />
+
+      <DeleteAccountModal
+        open={deleteOpen}
+        onClose={() => setDeleteOpen(false)}
       />
     </div>
   );

@@ -58,52 +58,102 @@ export function TutorProfileForm({
     });
   };
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white p-6 rounded-xl shadow">
-      {/* Bio */}
-      <div>
-        <label className="block font-medium mb-1">Bio</label>
-        <textarea {...register("bio", { required: true })} className="w-full border rounded-md p-2" rows={4} />
-      </div>
+  return (<form
+  onSubmit={handleSubmit(onSubmit)}
+  className="space-y-8 bg-white p-8 rounded-2xl shadow-lg border border-gray-100 max-w-3xl mx-auto"
+>
+  {/* Title */}
+  <h2 className="text-2xl font-extrabold bg-gradient-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent">
+    {isUpdate ? "Update Tutor Profile" : "Create Tutor Profile"}
+  </h2>
 
-      {/* Price */}
-      <div>
-        <label className="block font-medium mb-1">Hourly Price ($)</label>
-        <input type="number" {...register("price", { required: true })} className="w-full border rounded-md p-2" />
-      </div>
+  {/* Row 1: Bio + Price */}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="flex flex-col gap-1">
+      <label className="font-semibold text-gray-700">Bio</label>
+      <textarea
+        {...register("bio", { required: true })}
+        className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-[#b00ea5] focus:border-transparent transition"
+        rows={4}
+        placeholder="Write a short introduction..."
+      />
+    </div>
 
-      {/* Category */}
-      <div>
-        <label className="block font-medium mb-1">Category</label>
-        <select {...register("categoryId", { required: true })} className="w-full border rounded-md p-2">
-          <option value="">Select category</option>
-          {categories.data?.map((cat: any) => (
-            <option key={cat.id} value={cat.id}>{cat.name}</option>
-          ))}
-        </select>
-      </div>
+    <div className="flex flex-col gap-1">
+      <label className="font-semibold text-gray-700">Hourly Price ($)</label>
+      <input
+        type="number"
+        {...register("price", { required: true })}
+        className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-[#5624D0] focus:border-transparent transition"
+        placeholder="e.g. 25"
+      />
+    </div>
+  </div>
 
-      {/* Subjects */}
-      <div>
-        <label className="block font-medium mb-1">Subjects (comma separated)</label>
-        <input type="text" {...register("subjects", { required: true })} className="w-full border rounded-md p-2" />
-      </div>
+  {/* Row 2: Category + Subjects */}
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="flex flex-col gap-1">
+      <label className="font-semibold text-gray-700">Category</label>
+      <select
+        {...register("categoryId", { required: true })}
+        className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-[#b00ea5] focus:border-transparent transition"
+      >
+        <option value="">Select category</option>
+        {categories.data?.map((cat: any) => (
+          <option key={cat.id} value={cat.id}>
+            {cat.name}
+          </option>
+        ))}
+      </select>
+    </div>
 
-      {/* Experience */}
-      <div>
-        <label className="block font-medium mb-1">Experience (optional)</label>
-        <textarea {...register("experience")} className="w-full border rounded-md p-2" rows={3} />
-      </div>
+    <div className="flex flex-col gap-1">
+      <label className="font-semibold text-gray-700">Subjects</label>
+      <input
+        type="text"
+        {...register("subjects", { required: true })}
+        className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-[#5624D0] focus:border-transparent transition"
+        placeholder="Math, English, Physics..."
+      />
+    </div>
+  </div>
 
-      <button type="submit" disabled={isPending} className="w-full bg-primary text-white py-2 rounded-md font-semibold">
-        {isPending ? (isUpdate ? "Updating..." : "Creating...") : (isUpdate ? "Update Profile" : "Create Profile")}
-      </button>
+  {/* Full Width: Experience */}
+  <div className="flex flex-col gap-1">
+    <label className="font-semibold text-gray-700">Experience (optional)</label>
+    <textarea
+      {...register("experience")}
+      className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-[#b00ea5] focus:border-transparent transition"
+      rows={3}
+      placeholder="Describe your teaching experience..."
+    />
+  </div>
 
-      {isUpdate && (
-        <button type="button" onClick={onCancel} className="w-full bg-gray-300 py-2 rounded-md mt-2">
-          Cancel
-        </button>
-      )}
-    </form>
+  {/* Submit Button */}
+  <button
+    type="submit"
+    disabled={isPending}
+    className="w-full py-3 rounded-lg font-semibold text-white bg-gradient-to-r from-[#5624D0] to-[#b00ea5] shadow-md hover:opacity-90 transition"
+  >
+    {isPending
+      ? isUpdate
+        ? "Updating..."
+        : "Creating..."
+      : isUpdate
+      ? "Update Profile"
+      : "Create Profile"}
+  </button>
+
+  {/* Cancel Button */}
+  {isUpdate && (
+    <button
+      type="button"
+      onClick={onCancel}
+      className="w-full py-3 rounded-lg font-semibold bg-gray-200 hover:bg-gray-300 transition"
+    >
+      Cancel
+    </button>
+  )}
+</form>
   );
 }

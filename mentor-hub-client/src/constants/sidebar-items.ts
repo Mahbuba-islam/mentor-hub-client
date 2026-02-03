@@ -74,19 +74,19 @@ export const sidebarItems: Record<Roles, SidebarItem[]> = {
     },
     {
       label: "Your Bookings",
-      href: "/dashboard/bookings",
+      href: "/dashboard/bookSession",
       icon: BookOpen,
       feature: "BOOKING"
     },
     {
-      label: "Leave Reviews",
-      href: "/dashboard/reviews",
+      label: "Book Session",
+      href: "/tutors",
       icon: Star,
       feature: "REVIEWS"
     },
     {
-      label: "Update Profile",
-      href: "/dashboard/profile",
+      label: "Manage Profile",
+      href: "/dashboard/manageProfile",
       icon: UserCog,
       feature: "PROFILE"
     }

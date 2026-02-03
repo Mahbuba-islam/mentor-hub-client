@@ -1,5 +1,6 @@
 "use server"
 
+import { auth } from "@/lib/auth"
 import { studentService } from "@/src/services/userDashboard.services"
 import { revalidateTag } from "next/cache"
 
@@ -13,11 +14,24 @@ export const getStudentProfileAction = async () => {
 // -----------------------------
 // UPDATE STUDENT PROFILE
 // -----------------------------
-export const updateStudentProfileAction = async (data: any) => {
-  const res = await studentService.updateStudentProfile(data)
-  revalidateTag("student-profile", "page")
-  return res
-}
+export const updateStudentProfileAction = async (payload: any) => {
+  const res = await studentService.updateStudentProfile(payload);
+
+  // Backend returns: { data: { message, profile }, error: null }
+  if (res?.data?.profile) {
+    revalidateTag("student-profile", "page");
+
+    return {
+      success: true,
+      data: res.data.profile, // ⭐ send updated profile only
+    };
+  }
+
+  return {
+    success: false,
+    data: null,
+  };
+};
 
 
 // BOOK SESSION
@@ -46,6 +60,9 @@ export const completeBookingAction = async (bookingId: string) => {
 
 
 
+
+
+
 // -----------------------------
 // GET UPCOMING BOOKINGS
 // -----------------------------
@@ -70,3 +87,21 @@ export const leaveReviewAction = async (payload: any) => {
 }
 
 
+
+
+export async function deleteAccountAction() {
+  try {
+    const res = await studentService.deleteAccountService();
+
+    if (!res.success) {
+      return { success: false, message: res.message };
+    }
+
+    // Logout user after delete
+    await auth.api.signOut();
+
+    return { success: true };
+  } catch (error) {
+    return { success: false, message: "Something went wrong" };
+  }
+}

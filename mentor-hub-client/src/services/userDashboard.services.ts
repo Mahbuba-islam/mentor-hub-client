@@ -166,6 +166,29 @@ async completeBooking(bookingId: string) {
     }
   },
 
+
+  
+ async deleteAccountService() {
+  try {
+    const cookieStore = cookies(); 
+
+    const res = await fetch(`${API_URL}/student/delete-profile`, {
+      method: "DELETE",
+      headers: {
+        Cookie: cookieStore.toString(),
+      },
+      credentials: "include",
+    });
+
+    return await res.json();
+  } catch (error) {
+    return { success: false, message: "Something went wrong" };
+  }
+},
+
+
+
+
   // ---------------------------------------------------------
   // LEAVE REVIEW
   // ---------------------------------------------------------

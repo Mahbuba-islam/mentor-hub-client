@@ -37,6 +37,10 @@ export const userService = {
 
   },
 
+
+
+
+  
 async getAllUsers() {
     try {
       const res = await fetch(`${env.API_URL}/admin/getAllUsers`, {
@@ -50,5 +54,42 @@ async getAllUsers() {
   },
 
 
+
+
+  async registerUser  (data: {
+    userId: string;
+    name: string;
+    email: string;
+    role: "STUDENT" | "TUTOR";
+  })  {
+    const res = await fetch(`${env.API_URL}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(data),
+    });
+
+    return res.json();
+  },
+
+// async registerUser(data) {
+//   const res = await fetch(`${env.API_URL}/auth/register`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     credentials: "include",
+//     body: JSON.stringify(data),
+//   });
+
+//   return res.json();
+// }
+
+
+
+};
+
+  
    
-}

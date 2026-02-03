@@ -1,19 +1,19 @@
-import Link from "next/link"
+"use client";
 
+import Link from "next/link";
 
 type TutorCardProps = {
-  id: string
-  bio?: string | null
-  categoryName?: string
-  price?: number | null
-  rating?: number
-  totalReviews?: number
+  id: string;
+  bio?: string | null;
+  categoryName?: string;
+  price?: number | null;
+  rating?: number;
+  totalReviews?: number;
   user: {
-    name: string
-    image: string | null
-  }
-  onDetailsClick?: (id: string) => void
-}
+    name: string;
+    image: string | null;
+  };
+};
 
 export default function TutorCard({
   id,
@@ -23,66 +23,65 @@ export default function TutorCard({
   rating,
   totalReviews,
   user,
-  onDetailsClick,
+  subject
 }: TutorCardProps) {
   return (
-    <div className="flex flex-col rounded-lg border border-[#d1d7dc] bg-white shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden">
-      {/* Tutor Image */}
-      <div className="relative h-40 w-full bg-[#1c1d1f]">
-        {user.image ? (
-          <img
-            src={user.image}
-            alt={user.name}
-            className="h-full w-full object-cover"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-sm text-[#f7f9fa]">
-            No image
-          </div>
-        )}
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-col gap-2 p-3">
-        <h3 className="text-[15px] font-bold text-[#1c1d1f] line-clamp-1">
-          {user.name}
-        </h3>
-
-        <p className="text-[13px] text-[#6a6f73] line-clamp-2">{bio}</p>
-
-        {categoryName && (
-          <span className="text-[12px] font-medium text-[#6a6f73]">
-            Category: {categoryName}
-          </span>
-        )}
-
-        {/* Rating + Price */}
-        <div className="mt-1 flex items-center justify-between">
-          {rating !== undefined && (
-            <div className="flex items-center gap-1 text-[12px] text-[#b4690e]">
-              <span className="font-semibold">{rating.toFixed(1)}</span>
-              <span>★</span>
-              {totalReviews !== undefined && (
-                <span className="text-[#6a6f73]">({totalReviews})</span>
-              )}
+    <div
+          key={id}
+          className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 hover:shadow-xl transition-all hover:-translate-y-1"
+        >
+          {/* Header */}
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-full bg-gradient-to-r from-[#5624D0] to-[#b00ea5] flex items-center justify-center text-white font-bold text-xl shadow">
+              {user?.name?.charAt(0) ?? "?"}
             </div>
-          )}
 
-          <span className="text-[14px] font-bold text-[#1c1d1f]">
-            ${price}
-          </span>
+            <div>
+              <p className="text-lg font-bold text-gray-900">
+                {user?.name ?? "Unknown"}
+              </p>
+              <p className="text-sm text-gray-500">
+                {categoryName}
+              </p>
+            </div>
+          </div>
+
+          {/* Bio */}
+          <p className="mt-4 text-gray-700 text-sm line-clamp-3 leading-relaxed">
+            {bio}
+          </p>
+
+          {/* Subjects */}
+          <div className="mt-4 flex flex-wrap gap-2">
+            {subject?.map((sub) => (
+              <span
+                key={sub}
+                className="px-3 py-1 bg-gradient-to-r from-[#f3e8ff] to-[#ffe6fa] text-[#5624D0] font-medium rounded-full text-xs shadow-sm"
+              >
+                {sub}
+              </span>
+            ))}
+          </div>
+
+          {/* Rating & Price */}
+          <div className="mt-5 flex justify-between items-center text-sm font-medium">
+            <span className="text-gray-700">
+              ⭐ {rating} ({totalReviews} reviews)
+            </span>
+            <span className="text-[#5624D0] font-bold">
+              ${price}/hr
+            </span>
+          </div>
+
+          {/* CTA Button */}
+          <div className="mt-6">
+            <Link
+              href={`/tutorDetails/${id}`}
+              className="block w-full text-center py-2.5 rounded-lg font-semibold text-white bg-gradient-to-r from-[#5624D0] to-[#b00ea5] shadow hover:opacity-90 transition"
+            >
+              See Details for Booking
+            </Link>
+          </div>
         </div>
-
-        {/* Details Button */}
-        <Link
-  href={`/tutorDetails/${id}`}
-  className="mt-3 inline-block rounded-md border border-[#5624d0] bg-[#5624d0] px-3 py-1.5 text-[13px] font-semibold text-white hover:bg-[#3b1a99] transition-colors duration-150"
->
-  Details
-</Link>
-
-      </div>
-      
-    </div>
-  )
+  );
 }

@@ -4,6 +4,7 @@ import { User } from "./user.types";
 import { Category } from "./category.types";
 
 export interface TutorProfile {
+  experience: string;
   id: string;
   userId: string;
   categoryId: string;
