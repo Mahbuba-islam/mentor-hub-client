@@ -7,7 +7,7 @@ export default function AboutPage() {
       {/* Hero Section */}
       <section className="text-center space-y-4 animate-fadeIn">
         <h1 className="text-4xl font-extrabold 
-          bg-gradient-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent
+          bg-linear-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent
           animate-gradientShift">
           About MentorHub
         </h1>
@@ -30,7 +30,7 @@ export default function AboutPage() {
         </div>
 
         <div className="flex justify-center">
-          <div className="p-6 rounded-2xl bg-gradient-to-br from-[#f3e8ff] to-[#ffe6fa] shadow-md">
+          <div className="p-6 rounded-2xl bg-linear-to-br from-[#f3e8ff] to-[#ffe6fa] shadow-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="w-20 h-20 text-[#5624D0]"
@@ -48,7 +48,7 @@ export default function AboutPage() {
       {/* Why Choose Us */}
       <section className="space-y-10 animate-fadeIn">
         <h2 className="text-3xl font-extrabold text-center 
-          bg-gradient-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent">
+          bg-linear-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent">
           Why Choose MentorHub
         </h2>
 
@@ -113,7 +113,7 @@ export default function AboutPage() {
         <Link
           href="/tutors"
           className="inline-block px-6 py-3 rounded-lg text-white font-semibold 
-            bg-gradient-to-r from-[#5624D0] to-[#b00ea5] shadow hover:opacity-90 transition"
+            bg-linear-to-r from-[#5624D0] to-[#b00ea5] shadow hover:opacity-90 transition"
         >
           Meet Our Tutors →
         </Link>

@@ -8,77 +8,99 @@ import { Menu, X } from "lucide-react";
 import { LogOutButton } from "./LogOutButton";
 import { authClient } from "@/lib/auth-client";
 import { NavbarSearch } from "./modules/homepage/NavbarSearch";
+import { SessionResponse } from "@/src/types/user.types";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
- 
- const [session, setSession] = useState<{
-  user: any;
-  session: any;
-} | null>(null)
+const [session, setSession] = useState<SessionResponse | null>(null);
 
-useEffect(() => {
+
+  useEffect(() => {
   authClient.getSession().then((res) => {
-    setSession(res.data || null)
-  })
-}, [])
+    setSession(res.data || null);
+  });
+}, []);
 
 
- const mentorHubMenu = [
-  { title: "Home", url: "/" },
-  { title: "Find Tutors", url: "/tutors" },
-  { title: "Become a Tutor", url: "/signup" },
-  { title: "All Tutors", url: "/tutors" },
-  { title: "About", url: "/about" },
-];
+  const mentorHubMenu = [
+    { title: "Home", url: "/" },
+    { title: "Find Tutors", url: "/tutors" },
+    { title: "Become a Tutor", url: "/signup" },
+    { title: "All Tutors", url: "/tutors" },
+    { title: "About", url: "/about" },
+  ];
 
-if (session) {
-  mentorHubMenu.push({ title: "Dashboard", url: "/dashboard" });
-}
+  if (session) {
+    mentorHubMenu.push({ title: "Dashboard", url: "/dashboard" });
+  }
 
   return (
     <header className="w-full border-b bg-background">
-      <div className="container mx-auto flex items-center justify-between px-6 py-4">
+      <div
+        className="
+          container mx-auto 
+          flex flex-col gap-4 
+          md:flex-col 
+          lg:flex-row lg:items-center lg:justify-between 
+          px-6 py-4
+        "
+      >
+        {/* LOGO */}
+        <div className="flex items-center justify-between lg:justify-start">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="text-2xl font-extrabold tracking-tight bg-linear-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent">
+              MentorHub
+            </span>
+          </Link>
 
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          
-          <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent">
-  MentorHub
-</span>
+          {/* Mobile Hamburger */}
+          <button
+            className="lg:hidden"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <X size={26} /> : <Menu size={26} />}
+          </button>
+        </div>
 
-        </Link>
+        {/* SEARCHBAR */}
+        <div className="w-full lg:w-auto">
+          <NavbarSearch />
+        </div>
 
-        {/* searchbar */}
+        {/* DESKTOP MENU */}
+        <nav className="hidden lg:flex items-center gap-6">
+          {mentorHubMenu.map((item) => (
+            <Link
+              key={item.title}
+              href={item.url}
+              className="text-sm font-medium relative group"
+            >
+              <span className="group-hover:text-[#9a24d0] transition-colors duration-200">
+                {item.title}
+              </span>
 
-        <NavbarSearch/>
+              <span
+                className="
+                  absolute left-0 -bottom-1 h-0.5 w-0
+                  bg-[#8e24d0] group-hover:w-full transition-all duration-300
+                "
+              ></span>
+            </Link>
+          ))}
+        </nav>
 
-        {/* Desktop Menu */}
-  <nav className="hidden lg:flex items-center gap-6">
-  {mentorHubMenu.map((item) => (
-    <Link
-      key={item.title}
-      href={item.url}
-      className="text-sm font-medium relative group"
-    >
-      <span className="group-hover:text-[#9a24d0] transition-colors duration-200">
-        {item.title}
-      </span>
-
-      <span className="absolute left-0 -bottom-1 h-[2px] w-0
-       bg-[#8e24d0] group-hover:w-full transition-all duration-300"></span>
-    </Link>
-  ))}
-</nav>
-
-
-        {/* Desktop Right Side */}
+        {/* DESKTOP RIGHT SIDE */}
         <div className="hidden lg:flex items-center gap-3">
           <ModeToggle />
 
           {!session && (
             <>
-              <Button asChild variant="outline" size="sm" className="border-1 border-violet-700">
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="border border-violet-700"
+              >
                 <Link href="/login">Login</Link>
               </Button>
               <Button asChild size="sm" className="bg-violet-600">
@@ -89,18 +111,12 @@ if (session) {
 
           {session && <LogOutButton />}
         </div>
-
-        {/* Mobile Hamburger */}
-        <button className="lg:hidden" onClick={() => setOpen(!open)}>
-          {open ? <X size={26} /> : <Menu size={26} />}
-        </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* MOBILE MENU */}
       {open && (
         <div className="lg:hidden border-t bg-background">
           <div className="flex flex-col gap-4 px-6 py-4">
-
             {mentorHubMenu.map((item) => (
               <Link
                 key={item.title}

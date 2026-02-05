@@ -13,3 +13,32 @@ export interface User {
   image?: string | null
   role: UserRoles
 }
+
+
+
+
+
+
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  image?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  emailVerified: boolean;
+}
+
+export interface AuthSession {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  expiresAt: Date;   // ← MUST BE Date
+  ipAddress?: string | null;
+  userAgent?: string | null;
+}
+
+export interface SessionResponse {
+  user: AuthUser;
+  session: AuthSession;
+}

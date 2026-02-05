@@ -1,4 +1,4 @@
-import { BookIcon, UserIcon, UsersIcon, DollarSignIcon, LayoutDashboard, BookOpen, FolderPlus, Users, UserCog, Clock, Star, UserPlus, CalendarCheck } from "lucide-react"
+import {  LayoutDashboard, BookOpen, FolderPlus, Users, UserCog, Clock, Star, UserPlus, CalendarCheck } from "lucide-react"
 import { Roles } from "@/src/constants/roles"
 
 import type { FeatureKey } from "@/src/constants/features";

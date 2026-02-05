@@ -18,6 +18,7 @@ export default async function TutorDetails({ params }: { params: { id: string } 
   // CLEAN SUBJECTS
   const cleanedSubjects = tutor.subject
     ?.map((s: string) => s.trim().replace(/(^,)|(,$)|["“”]/g, ""))
+    
     .filter((s: string) => s.length > 0);
 
   return (
