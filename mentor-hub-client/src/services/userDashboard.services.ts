@@ -129,7 +129,8 @@ async completeBooking(bookingId: string) {
         headers: {
           Cookie: cookieStore.toString(),
         },
-        cache: "no-store",
+        next: { tags: ["student-upcoming-bookings"] },
+
       });
 
       const data = await res.json();
@@ -153,7 +154,8 @@ async completeBooking(bookingId: string) {
         headers: {
           Cookie: cookieStore.toString(),
         },
-        cache: "no-store",
+         next: { tags: ["student-past-bookings"] },
+
       });
 
       const data = await res.json();
@@ -170,22 +172,16 @@ async completeBooking(bookingId: string) {
   
  async deleteAccountService() {
   try {
-    const cookieStore = cookies(); 
-
-    const res = await fetch(`${API_URL}/student/delete-profile`, {
+    const res = await fetch(`${env.AUTH_URL}/student/delete-profile`, {
       method: "DELETE",
-      headers: {
-        Cookie: cookieStore.toString(),
-      },
-      credentials: "include",
+      credentials: "include",   // ⭐ correct place
     });
 
-    return await res.json();
+    return await res.json();    // now safe
   } catch (error) {
     return { success: false, message: "Something went wrong" };
   }
 },
-
 
 
 

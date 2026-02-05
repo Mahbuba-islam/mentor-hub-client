@@ -41,7 +41,7 @@ export const tutorService = {
 
 
   // GET TUTOR PROFILE 
-  getTutorProfile: async () => {
+  getTutorProfile: async (p0: { search: any; categoryName: any; }) => {
     const cookieStore = await cookies();
 
     const res = await fetch(`${env.API_URL}/tutors/dashboard`, {

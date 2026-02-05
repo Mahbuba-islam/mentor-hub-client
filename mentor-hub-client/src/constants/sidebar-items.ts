@@ -36,18 +36,13 @@ export const sidebarItems: Record<Roles, SidebarItem[]> = {
       feature: "SESSIONS"
     },
     {
-      label: "Create Profile",
-      href: "/dashboard/profile/create",
+      label: "Create & Update Profile",
+      href: "/dashboard/profile",
       icon: UserPlus,
       feature: "PROFILE"
     },
 
-    {
-      label: "Update Profile",
-      href: "/dashboard/profile/update",
-      icon: UserCog,
-      feature: "PROFILE"
-    },
+   
     {
       label: "Set Availability",
       href: "/dashboard/availability",

@@ -59,6 +59,7 @@ export default function ManageProfilePage({ user }) {
       />
 
       <DeleteAccountModal
+      
         open={deleteOpen}
         onClose={() => setDeleteOpen(false)}
       />

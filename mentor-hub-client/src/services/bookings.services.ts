@@ -1,4 +1,5 @@
 
+import { cookies } from "next/headers"
 import { env } from "../types/env"
 
 const API_URL = env.API_URL
@@ -62,4 +63,34 @@ export const bookingService = {
       return { success: false }
     }
   },
+
+
+
+  
+ async deleteBooking(id: string) {
+  try {
+    const cookieStore = await cookies();
+    const res = await fetch(`${API_URL}/bookings/${id}`, {
+      method: "DELETE",
+       headers: {
+            "Content-Type": "application/json",
+            Cookie: cookieStore.toString(),
+          },
+     
+    });
+
+
+     
+
+    return await res.json();
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong while deleting booking",
+    };
+  }
 }
+}
+
+
+

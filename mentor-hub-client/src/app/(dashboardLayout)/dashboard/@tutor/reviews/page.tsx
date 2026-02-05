@@ -8,7 +8,7 @@ export default async function TutorReviewsPage() {
 
   return (
     <div className="p-6">
-      <ReviewsList items={data.bookings} />
+      <ReviewsList items={data.data} />
     </div>
   );
 }

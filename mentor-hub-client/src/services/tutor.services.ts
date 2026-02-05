@@ -17,22 +17,27 @@ export const tutorService = {
   // ---------------------------------------------------------
   // GET TUTOR PROFILE (for dashboard/profile page)
   // ---------------------------------------------------------
-  async getTutorProfile() {
-    try {
-      const cookieHeader = getCookieHeader()
-console.log("cookie header", getCookieHeader())
+ async getTutorProfile({ search = "", categoryName = "" } = {}) {
+  try {
+    const url = new URL(`${API_URL}/tutors`);
 
-      const res = await fetch(`${API_URL}/tutors`, {
-        headers: { Cookie: cookieHeader },
-        cache: "no-store",
-      })
+    if (search) url.searchParams.set("search", search);
+    if (categoryName) url.searchParams.set("categoryName", categoryName);
 
-      const data = await res.json()
-      return { data, error: null }
-    } catch (err) {
-      return { data: null, error: { message: "Failed to fetch tutor profile" } }
-    }
-  },
+    const res = await fetch(url.toString(), {
+      cache: "no-store",
+    });
+
+    const data = await res.json();
+    return { data, error: null };
+  } catch (err) {
+    return {
+      data: null,
+      error: { message: "Failed to fetch tutor profile" },
+    };
+  }
+},
+
 
   // ---------------------------------------------------------
   // UPDATE TUTOR PROFILE
@@ -154,25 +159,49 @@ console.log("cookie header", getCookieHeader())
   },
 
 
+// async getFeaturedTutors(params?: Record<string, string>) {
+//     try {
+//       const url = new URL(`${API_URL}/tutors/featured`)
+//       if (params) {
+//         Object.entries(params).forEach(([key, value]) => {
+//           if (value) url.searchParams.append(key, value)
+//         })
+//       }
+//       const res = await fetch(url.toString(), { next: { tags: ["tutors"] } })
+//       const data = await res.json()
+//       return { data, error: null }
+//     } catch (err) {
+//       return { data: null, error: { message: "Failed to fetch tutors" } }
+//     }
+//   },
 
 
+
+
+
+async getFeaturedTutors() {
+  try {
+    const res = await fetch(`${API_URL}/tutors/featured`, {
+      cache: "no-store",
+      next: { tags: ["tutors"] },
+    });
+
+    const data = await res.json();
+    return { data, error: null };
+  } catch (err) {
+    return {
+      data: null,
+      error: { message: "Failed to fetch featured tutors" },
+    };
+  }
+},
 
   
 
 
 
 
-  async getFeaturedTutors() {
-    try {
-      const res = await fetch(`${API_URL}/tutors/featured`, {
-        next: { tags: ["tutors"] },
-      })
-      const data = await res.json()
-      return { data, error: null }
-    } catch (err) {
-      return { data: null, error: { message: "Failed to fetch featured tutors" } }
-    }
-  },
+  
 
   async getTutorById(id: string) {
     try {

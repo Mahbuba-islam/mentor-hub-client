@@ -7,6 +7,7 @@ import ModeToggle from "./mode-toggle";
 import { Menu, X } from "lucide-react";
 import { LogOutButton } from "./LogOutButton";
 import { authClient } from "@/lib/auth-client";
+import { NavbarSearch } from "./modules/homepage/NavbarSearch";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -48,6 +49,10 @@ if (session) {
 
         </Link>
 
+        {/* searchbar */}
+
+        <NavbarSearch/>
+
         {/* Desktop Menu */}
   <nav className="hidden lg:flex items-center gap-6">
   {mentorHubMenu.map((item) => (
@@ -73,10 +78,10 @@ if (session) {
 
           {!session && (
             <>
-              <Button asChild variant="outline" size="sm">
+              <Button asChild variant="outline" size="sm" className="border-1 border-violet-700">
                 <Link href="/login">Login</Link>
               </Button>
-              <Button asChild size="sm">
+              <Button asChild size="sm" className="bg-violet-600">
                 <Link href="/signup">Sign Up</Link>
               </Button>
             </>

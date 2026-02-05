@@ -6,6 +6,7 @@ import { deleteAccountAction } from "@/src/app/actions/userDashboard.action";
 import { toast } from "sonner";
 
 export default function DeleteAccountModal({ open, onClose }) {
+  console.log('deleteid');
   const handleDelete = async () => {
     const res = await deleteAccountAction();
    console.log('delete',res);

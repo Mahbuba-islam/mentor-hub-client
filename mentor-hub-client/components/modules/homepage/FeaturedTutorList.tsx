@@ -1,9 +1,10 @@
-import TutorCard from "@/components/modules/homepage/tutorCard"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import TutorCard from "./tutorCard"
 
-export default function FeaturedTutorList({ tutors }: { tutors: any[] }) {
+export default function FeaturedTutorList({ tutors }: { tutors: any }) {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {tutors.map((tutor) => (
+      {tutors.map((tutor:any) => (
         <div key={tutor.id} className="relative">
 
           {/* Featured Badge */}

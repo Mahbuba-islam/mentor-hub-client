@@ -45,18 +45,16 @@ export default function HeroBanner() {
           </div>
 
           {/* Right: Image */}
-          <div className="relative h-52 sm:h-64 md:h-72 lg:h-80 animate-float">
-            <div className="absolute -inset-6 bg-white/10 rounded-full blur-3xl" />
-            <div className="relative h-full w-full rounded-2xl overflow-hidden shadow-xl border border-white/10">
-              <Image
-                src="/banner-mentorhub.jpg" // change to your actual banner image
-                alt="Happy students learning with tutors"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          </div>
+           <div className="relative w-full h-72 md:h-96 animate-slide-right">
+                   <Image
+                     src="https://i.ibb.co/zTXhdTPJ/mentorhub-banner.jpg"
+                     alt="MentorHub Banner"
+                     fill
+                     className="rounded-xl object-cover shadow-xl"
+                     priority
+                   />
+                 </div>
+         
         </div>
       </div>
     </section>

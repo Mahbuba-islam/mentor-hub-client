@@ -4,6 +4,8 @@ import { useState } from "react";
 import ReviewModal from "./ReviewModal";
 import ErrorModal from "./ErrorModal";
 import { completeBookingAction, leaveReviewAction } from "@/src/app/actions/userDashboard.action";
+import Link from "next/link";
+import { DeleteBooking } from "./DeleteBooking";
 
 export default function BookSessionUi({ upcoming, past }) {
   const [pastList, setPastList] = useState(past);
@@ -12,9 +14,9 @@ export default function BookSessionUi({ upcoming, past }) {
   const [selectedBooking, setSelectedBooking] = useState(null);
 
   // COMPLETE BUTTON
-const handleComplete = async (bookingId) => {
+const handleComplete = async (bookingId:string) => {
   const res = await completeBookingAction(bookingId);
-
+console.log('booking data ***', res);
   if (!res?.data?.success) {
     setErrorOpen(true);
     return;
@@ -77,29 +79,40 @@ console.log('leaveReview', res);
                   {b.startTime} – {b.endTime}
                 </p>
 
-                <div className="mt-4 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-semibold">
-                    {b.tutor?.user?.name?.charAt(0)}
-                  </div>
+               <div className="mt-4 flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+  {/* Avatar */}
+  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#f3e8ff] to-[#ffe6fa] 
+                  flex items-center justify-center text-[#5624D0] font-bold text-lg shadow">
+    {b.tutor?.user?.name?.charAt(0)}
+  </div>
 
-                  <div>
-                    <p className="text-sm font-medium text-gray-800">
-                      {b.tutor?.user?.name}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      {b.tutor?.user?.email}
-                    </p>
-                  </div>
-                </div>
+  {/* Text Section */}
+  <div className="flex flex-col">
+    <p className="text-xs uppercase tracking-wide text-gray-500 font-medium">
+      This Session With
+    </p>
+
+    <p className="text-base font-semibold text-gray-900">
+      {b.tutor?.user?.name}
+    </p>
+
+    <p className="text-sm text-gray-500">
+      {b.tutor?.user?.email}
+    </p>
+  </div>
+</div>
 
                 <div className="mt-6 flex justify-between">
+                  <Link href={`/tutorDetails/${b.tutor.id}`}>
                   <button className="px-4 py-2 bg-gray-100 rounded-lg text-sm hover:bg-gray-200">
                     View Details
                   </button>
-
-                  <button className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm hover:bg-red-700">
-                    Cancel
-                  </button>
+                  </Link>
+                  
+{
+<DeleteBooking bookingId={b.id}/>
+}
+                  
                 </div>
               </div>
             ))}
@@ -130,25 +143,34 @@ console.log('leaveReview', res);
                   {b.startTime} – {b.endTime}
                 </p>
 
-                <div className="mt-4 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold">
-                    {b.tutor?.user?.name?.charAt(0)}
-                  </div>
+                <div className="mt-4 flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+  {/* Avatar */}
+  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#f3e8ff] to-[#ffe6fa] 
+                  flex items-center justify-center text-[#5624D0] font-bold text-lg shadow">
+    {b.tutor?.user?.name?.charAt(0)}
+  </div>
 
-                  <div>
-                    <p className="text-sm font-medium text-gray-800">
-                      {b.tutor?.user?.name}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      {b.tutor?.user?.email}
-                    </p>
-                  </div>
-                </div>
+  {/* Text Section */}
+  <div className="flex flex-col">
+    <p className="text-xs uppercase tracking-wide text-gray-500 font-medium">
+      This Session With
+    </p>
+
+    <p className="text-base font-semibold text-gray-900">
+      {b.tutor?.user?.name}
+    </p>
+
+    <p className="text-sm text-gray-500">
+      {b.tutor?.user?.email}
+    </p>
+  </div>
+</div>
+
 
                 {b.status === "COMPLETED" ? (
                   <button
                     disabled
-                    className="mt-6 w-full bg-green-600 text-white py-2 rounded-lg cursor-default"
+                    className="mt-6 w-full bg-violet-900 text-white py-2 rounded-lg cursor-default"
                   >
                     Completed
                   </button>
@@ -160,8 +182,10 @@ console.log('leaveReview', res);
                     Complete
                   </button>
                 )}
+            
               </div>
             ))}
+           
           </div>
         )}
       </section>

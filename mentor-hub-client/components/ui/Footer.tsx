@@ -15,7 +15,15 @@ import {
 
 export default function Footer() {
   return (
-    <footer className="mt-5 border-t bg-[#F7F9FA] text-[#1C1D1F]">
+    <footer    className="
+    mt-5 
+    bg-[#fcf2ff] 
+    text-[#1C1D1F]
+    border-t-2 border-transparent
+    [border-image:linear-gradient(to_right,rgba(86,36,208,0.4),rgba(176,14,165,0.4))_1]
+  "
+
+>
       <div className="mx-auto max-w-7xl px-6 py-12">
         
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">

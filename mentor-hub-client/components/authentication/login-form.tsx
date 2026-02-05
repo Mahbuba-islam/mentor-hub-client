@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 // Zod schema
 const formSchema = z.object({
@@ -165,6 +166,25 @@ export function SignInForm({ ...props }: React.ComponentProps<typeof Card>) {
           Login as Tutor
         </Button>
       </CardFooter>
+
+      <div className="text-center mt-4 space-y-1">
+  <p className="text-sm text-gray-600">
+    Don’t have an account?
+    <Link
+      href="/signup"
+      className="ml-1 font-semibold text-purple-600 hover:text-purple-700 underline"
+    >
+      Create one
+    </Link>
+  </p>
+
+  <Link
+    href="/"
+    className="text-sm text-gray-500 hover:text-gray-700 underline"
+  >
+    ← Back to Home
+  </Link>
+</div>
     </Card>
   );
 }
