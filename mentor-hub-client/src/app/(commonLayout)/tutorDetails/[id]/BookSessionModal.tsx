@@ -3,53 +3,62 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import SuccessModal from "./SuccessModal";
-import { bookSessionAction } from "@/src/app/actions/userDashboard.action";
 import ErrorModal from "./ErrorModal";
+import { bookSessionAction } from "@/src/app/actions/userDashboard.action";
 
-export default function BookSessionModal({ tutorId, tutorName }) {
+interface BookSessionModalProps {
+  tutorId: string;
+  tutorName: string;
+}
+
+interface BookingResponse {
+  success: boolean;
+  message?: string;
+  data?: unknown;
+}
+
+export default function BookSessionModal({
+  tutorId,
+  tutorName,
+}: BookSessionModalProps) {
   const [open, setOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
   const [errorOpen, setErrorOpen] = useState(false);
-const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [date, setDate] = useState("");
   const [slot, setSlot] = useState("");
   const router = useRouter();
 
   const timeSlots = [
-    "09:00 AM", "10:00 AM", "11:00 AM",
-    "12:00 PM", "02:00 PM", "03:00 PM", "04:00 PM"
+    "09:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "12:00 PM",
+    "02:00 PM",
+    "03:00 PM",
+    "04:00 PM",
   ];
 
   const handleBooking = async () => {
-  if (!date || !slot) return;
+    if (!date || !slot) return;
 
-  const res = await bookSessionAction({
-    tutorId,
-    date,
-    startTime: slot,
-    endTime: slot,
-  });
+    const res = (await bookSessionAction({
+      tutorId,
+      date,
+      startTime: slot,
+      endTime: slot,
+    })) as BookingResponse;
 
-  console.log("BOOKING RESPONSE:", res);
+    if (!res?.success) {
+      setErrorMessage(res?.message || "Maybe you already booked this session");
+      setErrorOpen(true);
+      return;
+    }
 
-
-  
-
-
-
-
-  if (!res?.success) {
-    // ⭐ Custom error message
-    setErrorMessage(res?.message || "Maybe you already booked this session");
-    setErrorOpen(true);
-    return;
-  }
-
-  setOpen(false);
-  setSuccessOpen(true);
-};
-
+    setOpen(false);
+    setSuccessOpen(true);
+  };
 
   return (
     <>
@@ -63,7 +72,9 @@ const [errorMessage, setErrorMessage] = useState("");
       {open && (
         <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-xl w-full max-w-md space-y-4 shadow-lg">
-            <h2 className="text-xl font-semibold">Book Session with {tutorName}</h2>
+            <h2 className="text-xl font-semibold">
+              Book Session with {tutorName}
+            </h2>
 
             <div>
               <label className="text-sm font-medium">Select Date</label>
@@ -121,12 +132,12 @@ const [errorMessage, setErrorMessage] = useState("");
         onDashboard={() => router.push("/dashboard/bookSession")}
         onHome={() => router.push("/")}
       />
-      <ErrorModal
-  open={errorOpen}
-  onClose={() => setErrorOpen(false)}
-  message={errorMessage}
-/>
 
+      <ErrorModal
+        open={errorOpen}
+        onClose={() => setErrorOpen(false)}
+        message={errorMessage}
+      />
     </>
   );
 }

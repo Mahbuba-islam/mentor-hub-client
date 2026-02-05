@@ -6,7 +6,7 @@ import Link from "next/link";
 export type TutorCardProps = {
   id: string;
   bio?: string | null;
-  category?: string;
+  categoryName?: string;
   price?: number | null;
   rating?: number;
   subject: string[];
@@ -20,10 +20,7 @@ export type TutorCardProps = {
 export default function TutorCard({
   id,
   bio,
-  category,
-  price,
-  rating,
-  totalReviews,
+  categoryName,
   user,
   subject
 }: TutorCardProps) {
@@ -36,7 +33,7 @@ export default function TutorCard({
       {/* Top Image - Semi Rounded */}
       <div className="w-full h-60 bg-gray-100 flex items-center justify-center">
         <Image
-          src={user?.image || "/default-avatar.png"}
+          src={user?.image || "https://i.ibb.co/xS7Y9FN0/a-colorful-modern-av.png"}
           alt={user?.name || "Tutor"}
           width={400}
           height={300}
@@ -52,7 +49,7 @@ export default function TutorCard({
         </p>
 
         {/* Category */}
-        <p className="text-xs text-gray-500 mt-0.5">{category}</p>
+        <p className="text-xs text-gray-500 mt-0.5">{categoryName}</p>
 
         {/* Bio */}
         <p className="mt-2 text-gray-700 text-xs line-clamp-2 leading-relaxed">
@@ -75,19 +72,13 @@ export default function TutorCard({
             ))}
         </div>
 
-        {/* Rating & Price */}
-        {/* <div className="mt-4 flex justify-between items-center text-sm font-medium">
-          <span className="text-gray-700">
-            ⭐ {rating} ({totalReviews} reviews)
-          </span>
-          <span className="text-[#5624D0] font-bold">${price}/hr</span>
-        </div> */}
+      
 
         {/* CTA Button */}
         <Link
           href={`/tutorDetails/${id}`}
           className="block w-full text-center py-2 mt-5 rounded-md font-semibold 
-          text-white bg-gradient-to-r from-[#5624D0] to-[#b00ea5] text-xs
+          text-white bg-linear-to-r from-[#5624D0] to-[#b00ea5] text-xs
           shadow hover:opacity-90 transition"
         >
           See Details for Booking

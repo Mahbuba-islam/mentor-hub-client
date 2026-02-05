@@ -1,8 +1,10 @@
 import { tutorService } from "@/src/services/tutor.services";
 import { TutorsCard } from "./TutorsCard";
+import Categories from "@/components/modules/homepage/Categories";
+import { TutorsPageProps } from "@/src/types/tutor.types";
 
-export default async function TutorsPage(props) {
-  const searchParams = await props.searchParams;
+export default async function TutorsPage(props:TutorsPageProps) {
+  const searchParams = await props.searchParams ?? {}
 
   const searchQuery = searchParams.search || "";
   const selectedCategory = searchParams.categoryName || "";
@@ -19,6 +21,8 @@ export default async function TutorsPage(props) {
   console.log("tutors", tutors);
 
   return (
+    <div>
+      <Categories/>
     <div className=" md:px-8  text-center">
      
 
@@ -26,7 +30,7 @@ export default async function TutorsPage(props) {
 {selectedCategory && tutors?.length > 0 && (
   <h2
     className="text-center text-3xl font-extrabold my-6 
-      bg-gradient-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent
+      bg-linear-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent
       animate-fadeIn"
   >
     Our {selectedCategory} Experts
@@ -37,7 +41,7 @@ export default async function TutorsPage(props) {
 {!selectedCategory && (
   <h2
     className="text-center text-2xl font-extrabold mb-6 my-12
-      bg-gradient-to-r from-[#7445ec] to-[#9b1e9b] bg-clip-text text-transparent
+      bg-linear-to-r from-[#7445ec] to-[#9b1e9b] bg-clip-text text-transparent
       animate-fadeIn"
   >
     Discover Expert Tutors
@@ -46,6 +50,7 @@ export default async function TutorsPage(props) {
 
 
       <TutorsCard tutors={tutors} selectedCategory ={selectedCategory }/>
+    </div>
     </div>
   );
 }

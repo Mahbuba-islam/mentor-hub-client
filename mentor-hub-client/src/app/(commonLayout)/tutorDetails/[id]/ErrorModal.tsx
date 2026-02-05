@@ -50,7 +50,7 @@ export default function ErrorModal({
 
     <Link
       href="/login"
-      className="px-4 py-2 rounded-md bg-gradient-to-r from-[#5624D0] to-[#b00ea5] text-white font-medium shadow hover:opacity-90 transition"
+      className="px-4 py-2 rounded-md bg-linear-to-r from-[#5624D0] to-[#b00ea5] text-white font-medium shadow hover:opacity-90 transition"
     >
       Login
     </Link>

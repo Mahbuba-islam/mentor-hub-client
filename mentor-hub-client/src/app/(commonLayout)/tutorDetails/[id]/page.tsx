@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { tutorService } from "@/src/services/tutor.services";
 import BookSessionModal from "./BookSessionModal";
+import {  ReviewWithStudent } from "@/src/types/review.types";
 
 export default async function TutorDetails({ params }: { params: { id: string } }) {
   const { id } = await params;
@@ -33,7 +34,7 @@ export default async function TutorDetails({ params }: { params: { id: string } 
             src={
               tutor.user?.image && tutor.user.image.trim() !== ""
                 ? tutor.user.image
-                : "/avatar-colorful.png"
+                : "https://i.ibb.co/xS7Y9FN0/a-colorful-modern-av.png"
             }
             alt={tutor.user?.name || "Tutor"}
             width={200}
@@ -82,7 +83,7 @@ export default async function TutorDetails({ params }: { params: { id: string } 
           {cleanedSubjects.map((sub: string) => (
             <span
               key={sub}
-              className="px-4 py-1.5 text-sm bg-gradient-to-r from-[#f3e8ff] to-[#ffe6fa]
+              className="px-4 py-1.5 text-sm bg-linear-to-r from-[#f3e8ff] to-[#ffe6fa]
               text-gray-800 border border-gray-200 rounded-full shadow-sm animate-fadeIn"
             >
               {sub}
@@ -96,7 +97,7 @@ export default async function TutorDetails({ params }: { params: { id: string } 
 
         {/* SMART HEADING */}
         <div className="space-y-1">
-          <h2 className="text-3xl font-extrabold bg-gradient-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent">
+          <h2 className="text-3xl font-extrabold bg-linear-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent">
             What Students Are Saying
           </h2>
           <p className="text-sm text-gray-500">Real feedback from verified learners.</p>
@@ -104,11 +105,11 @@ export default async function TutorDetails({ params }: { params: { id: string } 
 
         {tutor.reviews?.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {tutor.reviews.map((review: any) => (
+            {tutor.reviews.map((review: ReviewWithStudent) => (
               <div
                 key={review.id}
                 className="p-5 rounded-xl border border-gray-200 shadow-sm 
-                bg-gradient-to-br from-[#ffffff] to-[#f9f5ff]
+                bg-linear-to-br from-[#ffffff] to-[#f9f5ff]
                 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 animate-fadeIn"
               >
                 {/* Header */}

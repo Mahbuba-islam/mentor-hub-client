@@ -159,23 +159,6 @@ export const tutorService = {
   },
 
 
-// async getFeaturedTutors(params?: Record<string, string>) {
-//     try {
-//       const url = new URL(`${API_URL}/tutors/featured`)
-//       if (params) {
-//         Object.entries(params).forEach(([key, value]) => {
-//           if (value) url.searchParams.append(key, value)
-//         })
-//       }
-//       const res = await fetch(url.toString(), { next: { tags: ["tutors"] } })
-//       const data = await res.json()
-//       return { data, error: null }
-//     } catch (err) {
-//       return { data: null, error: { message: "Failed to fetch tutors" } }
-//     }
-//   },
-
-
 
 
 

@@ -26,7 +26,7 @@ export default function TutorBookingCTA({ tutorId, tutorName, isLoggedIn } : {tu
       ) : (
         <button
           onClick={handleLogin}
-          className="px-4 py-2 bg-gradient-to-r from-[#5624D0] to-[#b00ea5] text-white rounded-lg font-semibold shadow"
+          className="px-4 py-2 bg-linear-to-r from-[#5624D0] to-[#b00ea5] text-white rounded-lg font-semibold shadow"
         >
           Login to Book
         </button>
