@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/Navbar1";
 import Footer from "@/components/ui/Footer";
-import Banner from "@/components/ui/Banner";
 import AboutPage from "@/components/modules/homepage/About";
 import { Animated } from "@/components/modules/homepage/Animated";
 import Categories from "@/components/modules/homepage/Categories";

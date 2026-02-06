@@ -12,6 +12,12 @@ export interface User {
   email: string
   image?: string | null
   role: UserRoles
+   phone?: string | null;
+  status?:string | null
+    _count?: {
+    bookings: number;
+  };
+
 }
 
 

@@ -69,17 +69,7 @@ export default function AdminDashboardPage() {
             </div>
           </div>
         </Link>
-        <Link href="/dashboard/categories/createCategories">
-          <div className="group p-6 border rounded-xl shadow-sm hover:shadow-md transition-all cursor-pointer bg-white hover:bg-gray-50">
-            <div className="flex items-center gap-4">
-              <FolderKanban className="w-10 h-10 text-primary group-hover:scale-110 transition" />
-              <div>
-                <h2 className="text-lg font-semibold">Manage Categories</h2>
-                <p className="text-sm text-gray-500">Create Categories</p>
-              </div>
-            </div>
-          </div>
-        </Link>
+       
 
       </div>
     </div>

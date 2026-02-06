@@ -5,8 +5,9 @@ import { setActiveAction, setBanAction } from "@/src/app/actions/user.action";
 import { useTransition } from "react";
 
 import { toast } from "sonner";
+import { User} from "@/src/types/user.types";
 
-export default function ManageUserButtons({ user }) {
+export default function ManageUserButtons({ user }: {user:User}) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 

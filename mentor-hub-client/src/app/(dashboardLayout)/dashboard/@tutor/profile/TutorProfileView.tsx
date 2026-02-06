@@ -1,30 +1,31 @@
-
-// export function TutorProfileView({ profile, categories } : {profile:TutorProfile, categories:Category}) {
-//   const [isEditing, setIsEditing] = useState(false);
-
- "use client";
+"use client";
 
 import { useState } from "react";
 import { TutorProfileForm } from "./TutorProfileForm";
 import { TutorProfile } from "@/src/types/tutor.types";
 import { Category } from "@/src/types/category.types";
 
-export function TutorProfileView({ profile, categories } : {profile:TutorProfile, categories:Category}) {
+interface TutorProfileViewProps {
+  profile: TutorProfile;
+  categories: Category[];   
+}
+
+export function TutorProfileView({ profile, categories }: TutorProfileViewProps) {
   const [isEditing, setIsEditing] = useState(false);
 
   if (isEditing) {
     return (
       <TutorProfileForm
-        categories={{ data: categories }}
+        categories={{ data: categories }}   
         defaultValues={{
-          bio: profile.bio,
-          price: profile.price,
+          bio: profile.bio ?? "",
+          price: profile.price ?? 0,
           categoryId: profile.categoryId,
           subjects: profile.subject.join(", "),
           experience: profile.experience || "",
         }}
         isUpdate
-        onCancel={() => setIsEditing(false)}   // 🔥 FIX
+        onCancel={() => setIsEditing(false)}
       />
     );
   }

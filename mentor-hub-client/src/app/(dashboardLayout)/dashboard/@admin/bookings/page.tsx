@@ -1,12 +1,8 @@
-// import { adminService } from "@/src/services/admin.services"
-
 import { getBookingsAction } from "@/src/app/actions/booking.action";
+import { Booking } from "@/src/types/booking.types";
 
 export default async function AdminBookingsPage() {
-  const res = await getBookingsAction();
-// const bookings = res?.bookings ?? [];
-console.log('booking res', res);
-
+  const res = (await getBookingsAction()) as Booking[];
 
   return (
     <div className="space-y-6 p-4 md:p-6">
@@ -24,7 +20,7 @@ console.log('booking res', res);
           </thead>
 
           <tbody>
-            {res.map((b: any) => (
+            {res.map((b: Booking) => (
               <tr key={b.id} className="border-t">
                 <td className="px-4 py-2">
                   {b.student?.name ?? "N/A"}
@@ -47,5 +43,5 @@ console.log('booking res', res);
         </table>
       </div>
     </div>
-  )
+  );
 }

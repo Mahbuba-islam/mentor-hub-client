@@ -4,15 +4,27 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { XCircle } from "lucide-react";
 
-export default function ErrorModal({ open, onClose, message }) {
+interface ErrorModalProps {
+  open: boolean;
+  onClose: () => void;
+  message: string;
+}
+
+export default function ErrorModal({
+  open,
+  onClose,
+  message,
+}: ErrorModalProps) {
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/40 z-50" />
 
-        <Dialog.Content className="fixed z-50 top-1/2 left-1/2 
-          -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-xl w-full max-w-sm space-y-4">
-
+        <Dialog.Content
+          className="fixed z-50 top-1/2 left-1/2 
+          -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-xl 
+          w-full max-w-sm space-y-4 shadow-lg"
+        >
           <VisuallyHidden>
             <Dialog.Title>Error</Dialog.Title>
           </VisuallyHidden>

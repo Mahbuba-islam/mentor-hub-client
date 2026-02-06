@@ -3,11 +3,16 @@
 import { useState } from "react";
 import UpdateProfileModal from "./UpdateProfileModal";
 import DeleteAccountModal from "./DeleteAccountModal";
+import { User } from "@/src/types/user.types";
 
-export default function ManageProfilePage({ user }) {
-  const [open, setOpen] = useState(false);
-  const [deleteOpen, setDeleteOpen] = useState(false);
-  const [profile, setProfile] = useState(user);
+interface ManageProfilePageProps {
+  user: User;
+}
+
+export default function ManageProfilePage({ user }: ManageProfilePageProps) {
+  const [open, setOpen] = useState<boolean>(false);
+  const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
+  const [profile, setProfile] = useState<User>(user);
 
   return (
     <div className="space-y-8">
@@ -55,11 +60,10 @@ export default function ManageProfilePage({ user }) {
         open={open}
         onClose={() => setOpen(false)}
         profile={profile}
-        onUpdated={(updated) => setProfile(updated)}
+        onUpdated={(updated: User) => setProfile(updated)}
       />
 
       <DeleteAccountModal
-      
         open={deleteOpen}
         onClose={() => setDeleteOpen(false)}
       />

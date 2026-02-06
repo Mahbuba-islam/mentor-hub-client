@@ -4,19 +4,19 @@ import { revalidateTag } from "next/cache";
 import {
   tutorService,
   TutorProfileData,
-  AvailabilitySlot,
 } from "@/src/services/tutorDashboard.services";
 
 
 
 
-export const createTutorProfileAction = async (data: TutorProfileData) => {
+export const createTutorProfileAction = async (data:TutorProfileData) => {
   // Convert frontend fields to match Prisma model
   const payload = {
     bio: data.bio,
     price: data.price,
     categoryId: data.categoryId,
-    subject: data.subject,   
+    subject: data.subject,
+    image:null   
   };
 
   const res = await tutorService.createTutorProfile(payload);

@@ -16,7 +16,7 @@ export const deleteBookingAction = async (id: string) => {
   const res = await bookingService.deleteBooking(id);
 
   if (res.success) {
-    // ⭐ Revalidate bookings list
+   
     revalidateTag("student-upcoming-bookings", "default");
     revalidateTag("student-past-bookings", 'default');
   }

@@ -52,8 +52,8 @@ export interface TutorReview {
 
 export interface TutorDetailsType {
   id: string;
-  bio: string;
-  price: number;
+  bio:  string | null | undefined;
+  price: number | null | undefined
   rating: number;
   totalReviews: number;
   subject: string[];
@@ -67,3 +67,11 @@ export interface TutorByIdResponse {
     data: TutorDetailsType;
   };
 }
+
+
+export type CreateTutorProfilePayload = {
+  bio: string;
+  price: number;
+  categoryId: string;
+  subject: string[];
+};

@@ -5,9 +5,19 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Star } from "lucide-react";
 import { useState } from "react";
 
-export default function ReviewModal({ open, onClose, onSubmit }) {
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState("");
+interface ReviewModalProps {
+  open: boolean;
+  onClose: () => void;
+  onSubmit: (rating: number, comment: string) => void;
+}
+
+export default function ReviewModal({
+  open,
+  onClose,
+  onSubmit,
+}: ReviewModalProps) {
+  const [rating, setRating] = useState<number>(0);
+  const [comment, setComment] = useState<string>("");
 
   const handleSubmit = () => {
     onSubmit(rating, comment);
@@ -23,7 +33,7 @@ export default function ReviewModal({ open, onClose, onSubmit }) {
           -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-xl 
           w-full max-w-sm space-y-4 shadow-lg"
         >
-          {/* ⭐ Hidden Title (Required for accessibility) */}
+          {/* Hidden Title for accessibility */}
           <VisuallyHidden>
             <Dialog.Title>Leave a Review</Dialog.Title>
           </VisuallyHidden>

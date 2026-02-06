@@ -5,11 +5,18 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { deleteAccountAction } from "@/src/app/actions/userDashboard.action";
 import { toast } from "sonner";
 
-export default function DeleteAccountModal({ open, onClose }) {
-  console.log('deleteid');
+interface DeleteAccountModalProps {
+  open: boolean;
+  onClose: () => void;
+}
+
+export default function DeleteAccountModal({
+  open,
+  onClose,
+}: DeleteAccountModalProps) {
   const handleDelete = async () => {
     const res = await deleteAccountAction();
-   console.log('delete',res);
+
     if (res?.success) {
       toast("Account deleted successfully");
       window.location.href = "/";
@@ -35,7 +42,8 @@ export default function DeleteAccountModal({ open, onClose }) {
           <h2 className="text-xl font-semibold text-red-600">Delete Account</h2>
 
           <p className="text-gray-700">
-            Are you sure you want to delete your account? This action cannot be undone.
+            Are you sure you want to delete your account? This action cannot be
+            undone.
           </p>
 
           <div className="flex justify-end gap-3 pt-4">

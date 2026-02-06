@@ -1,8 +1,16 @@
 "use client";
 
-export function AvailabilityList({ items }) {
-  console.log("items", items);
+interface AvailabilitySlot {
+  id: string;
+  date: string | Date;
+  timeSlots: string[];
+}
 
+interface AvailabilityListProps {
+  items: AvailabilitySlot[];
+}
+
+export function AvailabilityList({ items }: AvailabilityListProps) {
   if (!items || items.length === 0) {
     return (
       <div className="bg-white p-6 rounded-xl shadow text-gray-500">

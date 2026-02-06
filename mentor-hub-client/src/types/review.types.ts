@@ -8,8 +8,9 @@ export interface Review {
 export interface ReviewWithStudent {
   id: string;
   rating: number;
-  comment: string | null;
+  comment: string 
   createdAt: string;
+  bookingId:string
 
   student: {
     id: string;

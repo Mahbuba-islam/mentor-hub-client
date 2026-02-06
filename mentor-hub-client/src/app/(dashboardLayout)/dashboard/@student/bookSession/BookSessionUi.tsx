@@ -3,51 +3,88 @@
 import { useState } from "react";
 import ReviewModal from "./ReviewModal";
 import ErrorModal from "./ErrorModal";
-import { completeBookingAction, leaveReviewAction } from "@/src/app/actions/userDashboard.action";
+import {
+  completeBookingAction,
+  leaveReviewAction,
+} from "@/src/app/actions/userDashboard.action";
 import Link from "next/link";
 import { DeleteBooking } from "./DeleteBooking";
 
-export default function BookSessionUi({ upcoming, past }) {
-  const [pastList, setPastList] = useState(past);
+// ----------------------
+// TYPES
+// ----------------------
+
+interface BookingUser {
+  name: string;
+  email: string;
+}
+
+interface BookingTutor {
+  id: string;
+  user: BookingUser | null;
+}
+
+export interface BookingItem {
+  id: string;
+  date: string | Date;
+  startTime: string;
+  endTime: string;
+  status: string;
+  tutor: BookingTutor;
+}
+
+interface BookSessionUiProps {
+  upcoming: BookingItem[];
+  past: BookingItem[];
+}
+
+// ----------------------
+// COMPONENT
+// ----------------------
+
+export default function BookSessionUi({ upcoming, past }: BookSessionUiProps) {
+  const [pastList, setPastList] = useState<BookingItem[]>(past);
   const [reviewOpen, setReviewOpen] = useState(false);
   const [errorOpen, setErrorOpen] = useState(false);
-  const [selectedBooking, setSelectedBooking] = useState(null);
+  const [selectedBooking, setSelectedBooking] = useState<string | null>(null);
 
   // COMPLETE BUTTON
-const handleComplete = async (bookingId:string) => {
-  const res = await completeBookingAction(bookingId);
-console.log('booking data ***', res);
-  if (!res?.data?.success) {
-    setErrorOpen(true);
-    return;
-  }
+  const handleComplete = async (bookingId: string) => {
+    const res = await completeBookingAction(bookingId);
 
-  // Update UI instantly
-  setPastList((prev) =>
-    prev.map((item) =>
-      item.id === bookingId ? { ...item, status: "COMPLETED" } : item
-    )
-  );
+    if (!res?.data?.success) {
+      setErrorOpen(true);
+      return;
+    }
 
-  setSelectedBooking(bookingId);
-  setReviewOpen(true); // open modal
-};
+    // Update UI instantly
+    setPastList((prev) =>
+      prev.map((item) =>
+        item.id === bookingId ? { ...item, status: "COMPLETED" } : item
+      )
+    );
 
-// REVIEW SUBMIT
-const handleReviewSubmit = async (rating, comment) => {
-  const res = await leaveReviewAction({
-    bookingId: selectedBooking,
-    rating,
-    comment,
-  });
-console.log('leaveReview', res);
-  if (!res?.data?.success) {
-    setErrorOpen(true);
-    return;
-  }
+    setSelectedBooking(bookingId);
+    setReviewOpen(true);
+  };
 
-  setReviewOpen(false);
-};
+  // REVIEW SUBMIT
+  const handleReviewSubmit = async (rating: number, comment: string) => {
+    if (!selectedBooking) return;
+
+    const res = await leaveReviewAction({
+      bookingId: selectedBooking,
+      rating,
+      comment,
+    });
+
+    if (!res?.data?.success) {
+      setErrorOpen(true);
+      return;
+    }
+
+    setReviewOpen(false);
+  };
 
   return (
     <div className="space-y-12">
@@ -79,40 +116,35 @@ console.log('leaveReview', res);
                   {b.startTime} – {b.endTime}
                 </p>
 
-               <div className="mt-4 flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
-  {/* Avatar */}
-  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#f3e8ff] to-[#ffe6fa] 
-                  flex items-center justify-center text-[#5624D0] font-bold text-lg shadow">
-    {b.tutor?.user?.name?.charAt(0)}
-  </div>
+                {/* Tutor Info */}
+                <div className="mt-4 flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
+                  <div className="w-12 h-12 rounded-full bg-linear-to-r from-[#f3e8ff] to-[#ffe6fa] flex items-center justify-center text-[#5624D0] font-bold text-lg shadow">
+                    {b.tutor?.user?.name?.charAt(0)}
+                  </div>
 
-  {/* Text Section */}
-  <div className="flex flex-col">
-    <p className="text-xs uppercase tracking-wide text-gray-500 font-medium">
-      This Session With
-    </p>
+                  <div className="flex flex-col">
+                    <p className="text-xs uppercase tracking-wide text-gray-500 font-medium">
+                      This Session With
+                    </p>
 
-    <p className="text-base font-semibold text-gray-900">
-      {b.tutor?.user?.name}
-    </p>
+                    <p className="text-base font-semibold text-gray-900">
+                      {b.tutor?.user?.name}
+                    </p>
 
-    <p className="text-sm text-gray-500">
-      {b.tutor?.user?.email}
-    </p>
-  </div>
-</div>
+                    <p className="text-sm text-gray-500">
+                      {b.tutor?.user?.email}
+                    </p>
+                  </div>
+                </div>
 
                 <div className="mt-6 flex justify-between">
                   <Link href={`/tutorDetails/${b.tutor.id}`}>
-                  <button className="px-4 py-2 bg-gray-100 rounded-lg text-sm hover:bg-gray-200">
-                    View Details
-                  </button>
+                    <button className="px-4 py-2 bg-gray-100 rounded-lg text-sm hover:bg-gray-200">
+                      View Details
+                    </button>
                   </Link>
-                  
-{
-<DeleteBooking bookingId={b.id}/>
-}
-                  
+
+                  <DeleteBooking bookingId={b.id} />
                 </div>
               </div>
             ))}
@@ -143,29 +175,26 @@ console.log('leaveReview', res);
                   {b.startTime} – {b.endTime}
                 </p>
 
+                {/* Tutor Info */}
                 <div className="mt-4 flex items-center gap-4 p-4 bg-white border border-gray-200 rounded-xl shadow-sm">
-  {/* Avatar */}
-  <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#f3e8ff] to-[#ffe6fa] 
-                  flex items-center justify-center text-[#5624D0] font-bold text-lg shadow">
-    {b.tutor?.user?.name?.charAt(0)}
-  </div>
+                  <div className="w-12 h-12 rounded-full bg-linear-to-r from-[#f3e8ff] to-[#ffe6fa] flex items-center justify-center text-[#5624D0] font-bold text-lg shadow">
+                    {b.tutor?.user?.name?.charAt(0)}
+                  </div>
 
-  {/* Text Section */}
-  <div className="flex flex-col">
-    <p className="text-xs uppercase tracking-wide text-gray-500 font-medium">
-      This Session With
-    </p>
+                  <div className="flex flex-col">
+                    <p className="text-xs uppercase tracking-wide text-gray-500 font-medium">
+                      This Session With
+                    </p>
 
-    <p className="text-base font-semibold text-gray-900">
-      {b.tutor?.user?.name}
-    </p>
+                    <p className="text-base font-semibold text-gray-900">
+                      {b.tutor?.user?.name}
+                    </p>
 
-    <p className="text-sm text-gray-500">
-      {b.tutor?.user?.email}
-    </p>
-  </div>
-</div>
-
+                    <p className="text-sm text-gray-500">
+                      {b.tutor?.user?.email}
+                    </p>
+                  </div>
+                </div>
 
                 {b.status === "COMPLETED" ? (
                   <button
@@ -182,21 +211,18 @@ console.log('leaveReview', res);
                     Complete
                   </button>
                 )}
-            
               </div>
             ))}
-           
           </div>
         )}
       </section>
 
-      {/* Review Modal (Leave Review Only) */}
+      {/* Review Modal */}
       <ReviewModal
-  open={reviewOpen}
-  onClose={() => setReviewOpen(false)}
-  onSubmit={handleReviewSubmit}
-/>
-
+        open={reviewOpen}
+        onClose={() => setReviewOpen(false)}
+        onSubmit={handleReviewSubmit}
+      />
 
       {/* Error Modal */}
       <ErrorModal

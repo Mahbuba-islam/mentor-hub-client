@@ -1,7 +1,13 @@
 import { getUsersAction } from "@/src/app/actions/user.action";
+import { User } from "@/src/types/user.types";
+import Image from "next/image";
+
+interface GetUsersResponse {
+  users: User[];
+}
 
 export default async function AdminUsersPage() {
-  const data = await getUsersAction();
+  const data = (await getUsersAction()) as GetUsersResponse;
   const users = data?.users ?? [];
 
   return (
@@ -22,7 +28,7 @@ export default async function AdminUsersPage() {
             </thead>
 
             <tbody className="divide-y">
-              {users.map((u) => (
+              {users.map((u: User) => (
                 <tr
                   key={u.id}
                   className="hover:bg-gray-50 transition-colors"
@@ -30,10 +36,12 @@ export default async function AdminUsersPage() {
                   {/* USER + AVATAR */}
                   <td className="px-4 py-3 flex items-center gap-3">
                     {u.image ? (
-                      <img
+                      <Image
                         src={u.image}
                         alt={u.name}
                         className="w-10 h-10 rounded-full object-cover"
+                        width={40}
+                        height={40}
                       />
                     ) : (
                       <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 font-semibold">

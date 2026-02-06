@@ -9,12 +9,17 @@ import {
 import { Pencil, Trash2, X } from "lucide-react";
 import { Category } from "@/src/types/category.types";
 
-export default function CategoryList({ categories} :{categories:Category}) {
-  const [items, setItems] = useState(categories);
-  const [editing, setEditing] = useState(null);
+interface CategoryListProps {
+  categories: Category[];
+}
+
+export default function CategoryList({ categories }: CategoryListProps) {
+  const [items, setItems] = useState<Category[]>(categories);
+
+  const [editing, setEditing] = useState<Category | null>(null);
   const [name, setName] = useState("");
 
-  const openEdit = (cat) => {
+  const openEdit = (cat: Category) => {
     setEditing(cat);
     setName(cat.name);
   };
@@ -29,6 +34,8 @@ export default function CategoryList({ categories} :{categories:Category}) {
       toast.error("Name cannot be empty");
       return;
     }
+
+    if (!editing) return;
 
     const res = await updateCategoryAction(editing.id, { name });
 
@@ -45,7 +52,7 @@ export default function CategoryList({ categories} :{categories:Category}) {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string) => {
     const res = await deleteCategoryAction(id);
 
     if (res?.success) {

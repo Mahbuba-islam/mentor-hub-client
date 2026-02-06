@@ -2,27 +2,33 @@
 
 import * as Dialog from "@radix-ui/react-dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { updateStudentProfileAction } from "@/src/app/actions/userDashboard.action";
+import { User } from "@/src/types/user.types";
 
-export default function UpdateProfileModal({ open, onClose, profile, onUpdated }) {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+interface UpdateProfileModalProps {
+  open: boolean;
+  onClose: () => void;
+  profile: User;
+  onUpdated: (updated: User) => void;
+}
 
-  // ⭐ Reset state when modal opens
-  useEffect(() => {
-    if (open && profile) {
-      setName(profile.name || "");
-      setPhone(profile.phone || "");
-    }
-  }, [open, profile]);
+export default function UpdateProfileModal({
+  open,
+  onClose,
+  profile,
+  onUpdated,
+}: UpdateProfileModalProps) {
+  // ⭐ State initializes from props because component remounts
+  const [name, setName] = useState(profile.name || "");
+  const [phone, setPhone] = useState(profile.phone || "");
 
   const handleSubmit = async () => {
     const res = await updateStudentProfileAction({ name, phone });
 
     if (res?.success && res.data) {
-      onUpdated(res.data); // ⭐ send updated profile to parent
-      onClose();            // ⭐ close modal
+      onUpdated(res.data);
+      onClose();
     } else {
       alert("Something went wrong");
     }
@@ -45,7 +51,6 @@ export default function UpdateProfileModal({ open, onClose, profile, onUpdated }
           <h2 className="text-xl font-semibold">Update Profile</h2>
 
           <div className="space-y-3">
-            {/* Name */}
             <div>
               <label className="text-sm text-gray-600">Name</label>
               <input
@@ -55,7 +60,6 @@ export default function UpdateProfileModal({ open, onClose, profile, onUpdated }
               />
             </div>
 
-            {/* Phone */}
             <div>
               <label className="text-sm text-gray-600">Phone</label>
               <input

@@ -1,10 +1,15 @@
 "use client";
 
+import { User } from "@/src/types/user.types";
 import ManageUserButtons from "./manageUserButton";
 
+interface ManageUserTableProps {
+  data: {
+    users: User[];
+  };
+}
 
-
-export default function ManageUserTable({ data }) {
+export default function ManageUserTable({ data }: ManageUserTableProps) {
   return (
     <table className="w-full border-collapse">
       <thead>
@@ -17,10 +22,11 @@ export default function ManageUserTable({ data }) {
       </thead>
 
       <tbody>
-        {data.users.map((user) => (
+        {data.users.map((user: User) => (
           <tr key={user.id} className="border-b">
             <td className="p-3 border">{user.name}</td>
             <td className="p-3 border">{user.email}</td>
+
             <td className="p-3 border">
               <span
                 className={`px-2 py-1 rounded text-white ${
@@ -30,6 +36,7 @@ export default function ManageUserTable({ data }) {
                 {user.status}
               </span>
             </td>
+
             <td className="p-3 border">
               <ManageUserButtons user={user} />
             </td>
