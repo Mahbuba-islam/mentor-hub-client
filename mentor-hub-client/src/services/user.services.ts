@@ -1,141 +1,77 @@
-import { cookies } from "next/headers"
-import { env } from "../types/env"
+"use server";
+
+import { cookies } from "next/headers";
 
 export const userService = {
-  getSession: async function () {
+  
+  async getSession() {
     try {
-      const cookieStore = cookies()
+      const cookieStore = cookies();
 
       const cookieHeader = (await cookieStore)
         .getAll()
         .map(c => `${c.name}=${c.value}`)
-        .join("; ")
+        .join("; ");
 
-      const res = await fetch(`${env.AUTH_URL}/get-session`, {
-        headers: {
-          Cookie: cookieHeader,
-        },
-        cache: "no-store",
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_AUTH_URL}/get-session`,
+        {
+          headers: {
+            Cookie: cookieHeader,
+          },
+          cache: "no-store",
+          credentials: "include",
+        }
+      );
 
-      const session = await res.json()
+      const session = await res.json();
 
-      console.log("session-data", session)
-
-      if (session === null) {
-        return { data: null, error: { message: "session is missing" } }
+      if (!session) {
+        return { data: null, error: { message: "Session missing" } };
       }
 
-      return { data: session, error: null }
+      return { data: session, error: null };
     } catch (err) {
-      console.error(err)
-      return { data: null, error: { message: err } }
-    }
-
-
-    
-
-  },
-
-
-
-
-  
-async getAllUsers() {
-    try {
-      const res = await fetch(`${env.API_URL}/admin/getAllUsers`, {
-        next: { tags: ["users"] },
-      })
-      const data = await res.json()
-      return { data, error: null }
-    } catch (err) {
-      return { data: null, error: { message: "Failed to fetch users" } }
+      return { data: null, error: { message: "Something went wrong" } };
     }
   },
 
-
-
-
-  async registerUser  (data: {
+  // ⭐ 2) Register user using your backend (NOT BetterAuth)
+  async registerUser(data: {
     userId: string;
     name: string;
     email: string;
     role: "STUDENT" | "TUTOR";
-  })  {
-    const res = await fetch(`${env.API_URL}/auth/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify(data),
-    });
+  }) {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(data),
+      }
+    );
 
     return res.json();
   },
 
+  // ⭐ 3) Admin get all users
+  async getAllUsers() {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/getAllUsers`,
+        {
+          next: { tags: ["users"] },
+        }
+      );
 
-
-
-
-// src/services/user.services.ts
-// "use server"
-
-// export const userService = {
-//   getSession: async () => {
-//     const res = await fetch("/api/auth/get-session", { cache: "no-store" });
-//     return res.json();
-//   },
-
-//   registerUser: async (data: {
-//     userId: string;
-//     name: string;
-//     email: string;
-//     role: "STUDENT" | "TUTOR";
-//   }) => {
-//     const res = await fetch("/api/auth/register", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify(data),
-//     });
-//     return res.json();
-//   },
-
-
-//   async getAllUsers() {
-//     try {
-//       const res = await fetch("/api/admin/getAllUsers", {
-//         next: { tags: ["users"] },
-//       })
-//       const data = await res.json()
-//       return { data, error: null }
-//     } catch (err) {
-//       return { data: null, error: { message: "Failed to fetch users" } }
-//     }
-//   },
-
-// };
-
-
-
-
-
-
-// async registerUser(data) {
-//   const res = await fetch(`${env.API_URL}/auth/register`, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     credentials: "include",
-//     body: JSON.stringify(data),
-//   });
-
-//   return res.json();
-// }
-
-
-}
-
-  
-   
+      const data = await res.json();
+      return { data, error: null };
+    } catch (err) {
+      return { data: null, error: { message: "Failed to fetch users" } };
+    }
+  },
+};

@@ -1,8 +1,8 @@
 
 import { cookies } from "next/headers";
-import { env } from "../types/env";
 
-const API_URL = env.API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+
 
 export interface CategoryData {
   name: string;

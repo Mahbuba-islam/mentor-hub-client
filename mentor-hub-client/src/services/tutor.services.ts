@@ -1,8 +1,9 @@
 import { cookies } from "next/headers"
-import { env } from "../types/env"
+
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 
-const API_URL = env.API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+
 
 // Helper: Convert Next.js cookies → real cookie header
 function getCookieHeader() {

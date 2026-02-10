@@ -1,7 +1,6 @@
 
-import { env } from "../types/env"
 
-const API_URL = env.API_URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
 export const availabilityService = {
   async getSlots({ tutorId, date }: { tutorId: string; date: string }) {
