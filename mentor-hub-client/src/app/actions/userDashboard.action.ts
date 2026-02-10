@@ -2,21 +2,22 @@
 "use server"
 
 import { auth } from "@/lib/auth"
-import { studentService } from "@/src/services/userDashboard.services"
+import { bookSession, completeBooking, deleteAccountService, getPastBookings, getStudentProfile, getUpcomingBookings, leaveReview, updateStudentProfile } from "@/src/services/userDashboard.services"
+
 import { revalidateTag } from "next/cache"
 
 // -----------------------------
 // GET STUDENT PROFILE
 // -----------------------------
 export const getStudentProfileAction = async () => {
-  return await studentService.getStudentProfile()
+  return await getStudentProfile()
 }
 
 // -----------------------------
 // UPDATE STUDENT PROFILE
 // -----------------------------
 export const updateStudentProfileAction = async (payload: any) => {
-  const res = await studentService.updateStudentProfile(payload)
+  const res = await updateStudentProfile(payload)
 
   if (res?.data?.profile) {
     revalidateTag("student-profile", "default")   // ⭐ FIXED
@@ -38,7 +39,7 @@ export const bookSessionAction = async (payload: {
   startTime: string
   endTime: string
 }) => {
-  const res = await studentService.bookSession(payload)
+  const res = await bookSession(payload)
   revalidateTag("student-bookings", "default")   
   revalidateTag("tutors", "default")             
   return res
@@ -48,7 +49,7 @@ export const bookSessionAction = async (payload: {
 // COMPLETE BOOKING
 // -----------------------------
 export const completeBookingAction = async (bookingId: string) => {
-  const res = await studentService.completeBooking(bookingId)
+  const res = await completeBooking(bookingId)
   revalidateTag("student-bookings", "default")   // ⭐ FIXED
   revalidateTag("tutors", "default")             // ⭐ IMPORTANT FIX
   return res
@@ -58,21 +59,21 @@ export const completeBookingAction = async (bookingId: string) => {
 // GET UPCOMING BOOKINGS
 // -----------------------------
 export const getUpcomingBookingsAction = async () => {
-  return await studentService.getUpcomingBookings()
+  return await getUpcomingBookings()
 }
 
 // -----------------------------
 // GET PAST BOOKINGS
 // -----------------------------
 export const getPastBookingsAction = async () => {
-  return await studentService.getPastBookings()
+  return await getPastBookings()
 }
 
 // -----------------------------
 // LEAVE REVIEW
 // -----------------------------
 export const leaveReviewAction = async (payload: any) => {
-  const res = await studentService.leaveReview(payload)
+  const res = await leaveReview(payload)
   revalidateTag("student-reviews", "default")    
   revalidateTag("tutors", "default")             
   return res
@@ -83,7 +84,7 @@ export const leaveReviewAction = async (payload: any) => {
 // -----------------------------
 export async function deleteAccountAction() {
   try {
-    const res = await studentService.deleteAccountService()
+    const res = await deleteAccountService()
 
     if (!res.success) {
       return { success: false, message: res.message }

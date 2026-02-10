@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { DateTimePicker } from "./DateTimePicker"
 import { AvailabilityCalendar } from "./AvailabilityCalendar"
-import { bookingService } from "@/src/services/bookings.services"
+import { createBooking } from "@/src/services/bookings.services"
 
 export function BookingModal({ tutorId, open, onClose }: {
   tutorId: string
@@ -16,7 +16,7 @@ export function BookingModal({ tutorId, open, onClose }: {
   const handleConfirm = async () => {
     if (!dateTime) return
 
-    const res = await bookingService.createBooking({
+    const res = await createBooking({
       tutorId,
       date: dateTime.date,
       startTime: dateTime.time,

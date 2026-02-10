@@ -2,8 +2,15 @@
 
 import { revalidateTag } from "next/cache";
 import {
-  tutorService,
+ 
+  createTutorProfile,
+  getAvailability,
+  getRatingsAndReviews,
+  getSessions,
+  getTutorProfile,
+  setAvailability,
   TutorProfileData,
+  updateTutorProfile,
 } from "@/src/services/tutorDashboard.services";
 
 
@@ -19,7 +26,7 @@ export const createTutorProfileAction = async (data:TutorProfileData) => {
     image:null   
   };
 
-  const res = await tutorService.createTutorProfile(payload);
+  const res = await createTutorProfile(payload);
 
   revalidateTag("tutor-profile", "page");
 
@@ -36,14 +43,14 @@ export const createTutorProfileAction = async (data:TutorProfileData) => {
 // GET TUTOR PROFILE
 // -----------------------------
 export const getTutorProfileAction = async () => {
-  return await tutorService.getTutorProfile();
+  return await getTutorProfile();
 };
 
 // -----------------------------
 // UPDATE TUTOR PROFILE
 // -----------------------------
 export const updateTutorProfileAction = async (data: TutorProfileData) => {
-  const res = await tutorService.updateTutorProfile(data);
+  const res = await updateTutorProfile(data);
 
   revalidateTag("tutor-profile", "page");
 
@@ -54,7 +61,7 @@ export const updateTutorProfileAction = async (data: TutorProfileData) => {
 
 // GET TUTOR AVAILABILITY
 export const getTutorAvailabilityAction = async () => {
-  const res = await tutorService.getAvailability();
+  const res = await getAvailability();
   return res;
 };
 
@@ -70,7 +77,7 @@ export const setAvailabilityAction = async (slots: {
   date: string;
   timeSlots: string[];
 }) => {
-  const res = await tutorService.setAvailability(slots);
+  const res = await setAvailability(slots);
 
   revalidateTag("tutor-availability", "page");
 
@@ -81,12 +88,12 @@ export const setAvailabilityAction = async (slots: {
 // GET TEACHING SESSIONS
 // -----------------------------
 export const getTeachingSessionsAction = async () => {
-  return await tutorService.getSessions();
+  return await getSessions();
 };
 
 // -----------------------------
 // GET RATINGS & REVIEWS
 // -----------------------------
 export const getRatingsAndReviewsAction = async () => {
-  return await tutorService.getRatingsAndReviews();
+  return await getRatingsAndReviews();
 };

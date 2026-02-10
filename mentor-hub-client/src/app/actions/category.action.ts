@@ -1,16 +1,16 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
-import { categoryService, CategoryData } from "@/src/services/category.service";
+import {  CategoryData, createCategory, deleteCategory, getCategories, updateCategory } from "@/src/services/category.service";
 
 export const createCategoryAction = async (data: CategoryData) => {
-  const res = await categoryService.createCategory(data);
+  const res = await createCategory(data);
   revalidateTag("categories", "page");
   return res;
 };
 
 export const getCategoriesAction = async () => {
-  return await categoryService.getCategories();
+  return await getCategories();
 };
 
 
@@ -19,7 +19,7 @@ export const getCategoriesAction = async () => {
 
 export async function deleteCategoryAction(id: string) {
   try {
-    await categoryService.deleteCategory(id)
+    await deleteCategory(id)
 
     // Revalidate category list
     revalidateTag("categories", "page")
@@ -34,7 +34,7 @@ export async function deleteCategoryAction(id: string) {
 
 export async function updateCategoryAction(id: string, data: { name: string }) {
   try {
-    await categoryService.updateCategory(id, data)
+    await updateCategory(id, data)
     revalidateTag("categories", "page")
 
     return { success: true }

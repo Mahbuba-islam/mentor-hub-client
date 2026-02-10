@@ -1,3 +1,5 @@
+"use server";
+
 import { cookies } from "next/headers";
 
 export interface TutorProfileData {
@@ -14,147 +16,118 @@ export interface AvailabilitySlot {
   timeSlots: string[];
 }
 
-export const tutorService = {
-  // ⭐ Helper: Build cookie header
-  buildCookieHeader: async () => {
-    const cookieStore = await cookies();
-    return cookieStore
-      .getAll()
-      .map(c => `${c.name}=${c.value}`)
-      .join("; ");
-  },
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
-  // ⭐ CREATE TUTOR PROFILE
-  createTutorProfile: async (data: TutorProfileData) => {
-    const cookieHeader = await tutorService.buildCookieHeader();
+// ⭐ Helper: Build cookie header
+export async function buildCookieHeader() {
+  const cookieStore = await cookies();
+  return cookieStore
+    .getAll()
+    .map(c => `${c.name}=${c.value}`)
+    .join("; ");
+}
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/tutors/create`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieHeader,
-        },
-        credentials: "include",
-        body: JSON.stringify(data),
-      }
-    );
+// ⭐ CREATE TUTOR PROFILE
+export async function createTutorProfile(data: TutorProfileData) {
+  const cookieHeader = await buildCookieHeader();
 
-    return res.json();
-  },
+  const res = await fetch(`${API_URL}/tutors/create`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: cookieHeader,
+    },
+    credentials: "include",
+    body: JSON.stringify(data),
+  });
 
-  // ⭐ GET TUTOR PROFILE (Dashboard)
-  getTutorProfile: async () => {
-    const cookieHeader = await tutorService.buildCookieHeader();
+  return res.json();
+}
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/tutors/dashboard`,
-      {
-        headers: {
-          Cookie: cookieHeader,
-        },
-        cache: "no-store",
-        credentials: "include",
-      }
-    );
+// ⭐ GET TUTOR PROFILE (Dashboard)
+export async function getTutorProfile() {
+  const cookieHeader = await buildCookieHeader();
 
-    return res.json();
-  },
+  const res = await fetch(`${API_URL}/tutors/dashboard`, {
+    headers: { Cookie: cookieHeader },
+    cache: "no-store",
+    credentials: "include",
+  });
 
-  // ⭐ UPDATE TUTOR PROFILE
-  updateTutorProfile: async (data: TutorProfileData) => {
-    const cookieHeader = await tutorService.buildCookieHeader();
+  return res.json();
+}
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/tutors/profile`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieHeader,
-        },
-        credentials: "include",
-        body: JSON.stringify(data),
-      }
-    );
+// ⭐ UPDATE TUTOR PROFILE
+export async function updateTutorProfile(data: TutorProfileData) {
+  const cookieHeader = await buildCookieHeader();
 
-    return res.json();
-  },
+  const res = await fetch(`${API_URL}/tutors/profile`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: cookieHeader,
+    },
+    credentials: "include",
+    body: JSON.stringify(data),
+  });
 
-  // ⭐ SET AVAILABILITY
-  setAvailability: async (slots: AvailabilitySlot) => {
-    const cookieHeader = await tutorService.buildCookieHeader();
+  return res.json();
+}
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/tutors/availability`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieHeader,
-        },
-        credentials: "include",
-        body: JSON.stringify(slots),
-      }
-    );
+// ⭐ SET AVAILABILITY
+export async function setAvailability(slots: AvailabilitySlot) {
+  const cookieHeader = await buildCookieHeader();
 
-    return res.json();
-  },
+  const res = await fetch(`${API_URL}/tutors/availability`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: cookieHeader,
+    },
+    credentials: "include",
+    body: JSON.stringify(slots),
+  });
 
-  // ⭐ GET AVAILABILITY
-  getAvailability: async () => {
-    const cookieHeader = await tutorService.buildCookieHeader();
+  return res.json();
+}
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/tutors/availability`,
-      {
-        method: "GET",
-        headers: {
-          Cookie: cookieHeader,
-        },
-        cache: "no-store",
-        credentials: "include",
-      }
-    );
+// ⭐ GET AVAILABILITY
+export async function getAvailability() {
+  const cookieHeader = await buildCookieHeader();
 
-    return res.json();
-  },
+  const res = await fetch(`${API_URL}/tutors/availability`, {
+    method: "GET",
+    headers: { Cookie: cookieHeader },
+    cache: "no-store",
+    credentials: "include",
+  });
 
-  // ⭐ GET TEACHING SESSIONS
-  getSessions: async () => {
-    const cookieHeader = await tutorService.buildCookieHeader();
+  return res.json();
+}
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/tutors/sessions`,
-      {
-        method: "GET",
-        headers: {
-          Cookie: cookieHeader,
-        },
-        cache: "no-store",
-        credentials: "include",
-      }
-    );
+// ⭐ GET TEACHING SESSIONS
+export async function getSessions() {
+  const cookieHeader = await buildCookieHeader();
 
-    return res.json();
-  },
+  const res = await fetch(`${API_URL}/tutors/sessions`, {
+    method: "GET",
+    headers: { Cookie: cookieHeader },
+    cache: "no-store",
+    credentials: "include",
+  });
 
-  // ⭐ GET RATINGS & REVIEWS
-  getRatingsAndReviews: async () => {
-    const cookieHeader = await tutorService.buildCookieHeader();
+  return res.json();
+}
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/tutors/reviews`,
-      {
-        headers: {
-          Cookie: cookieHeader,
-        },
-        cache: "no-store",
-        credentials: "include",
-      }
-    );
+// ⭐ GET RATINGS & REVIEWS
+export async function getRatingsAndReviews() {
+  const cookieHeader = await buildCookieHeader();
 
-    return res.json();
-  },
-};
+  const res = await fetch(`${API_URL}/tutors/reviews`, {
+    headers: { Cookie: cookieHeader },
+    cache: "no-store",
+    credentials: "include",
+  });
+
+  return res.json();
+}

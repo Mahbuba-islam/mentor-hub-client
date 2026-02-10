@@ -1,13 +1,14 @@
-import { tutorService } from "@/src/services/tutor.services";
+
 import Link from "next/link";
 import TutorCard from "@/components/modules/homepage/tutorCard";
 import { Animated } from "@/components/modules/homepage/Animated";
 import { TutorProfile } from "@/src/types/tutor.types";
+import { getFeaturedTutors } from "@/src/services/tutor.services";
 
 
 
 export default async function FeaturedTutors() {
- const { data: featuredTutors } = await tutorService.getFeaturedTutors();
+ const { data: featuredTutors } = await getFeaturedTutors();
    console.log('featureTutor', featuredTutors);
   return (
     <div>

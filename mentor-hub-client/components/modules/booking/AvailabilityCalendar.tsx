@@ -1,7 +1,7 @@
 "use client"
 
+import { getSlots } from "@/src/services/bookingAvailavility.services"
 import { useEffect, useState } from "react"
-import { availabilityService } from "@/src/services/bookingAvailavility.services"
 
 export function AvailabilityCalendar({ tutorId, date, onSelect }: {
   tutorId: string
@@ -13,7 +13,7 @@ export function AvailabilityCalendar({ tutorId, date, onSelect }: {
   useEffect(() => {
     if (!date) return
     ;(async () => {
-      const res = await availabilityService.getSlots({ tutorId, date })
+      const res = await getSlots({ tutorId, date })
       setSlots(res?.slots || [])
     })()
   }, [date, tutorId])

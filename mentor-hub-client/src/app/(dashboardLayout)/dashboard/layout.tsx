@@ -7,7 +7,7 @@ import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 
 import { Roles } from "@/src/constants/roles"
-import { userService } from "@/src/services/user.services"
+import { getSession } from "@/src/services/user.services";
 
 export default async function DashboardLayout({
   admin,
@@ -19,7 +19,7 @@ export default async function DashboardLayout({
   tutor: React.ReactNode
 }) {
 
- const {data} = await userService.getSession()
+ const {data} = await getSession()
     console.log("dashboard layout", data);
     const user = data.user
     

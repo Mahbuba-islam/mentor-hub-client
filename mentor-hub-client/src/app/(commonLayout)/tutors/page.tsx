@@ -1,6 +1,7 @@
-import { tutorService } from "@/src/services/tutor.services";
+
 import { TutorsCard } from "./TutorsCard";
 import Categories from "@/components/modules/homepage/Categories";
+import { getTutorProfile } from "@/src/services/tutor.services";
 import { TutorsPageProps } from "@/src/types/tutor.types";
 
 export default async function TutorsPage(props:TutorsPageProps) {
@@ -12,7 +13,7 @@ export default async function TutorsPage(props:TutorsPageProps) {
   console.log("searchParams.categoryName:", selectedCategory);
 
 
-  const { data: tutors, error } = await tutorService.getTutorProfile({
+  const { data: tutors, error } = await getTutorProfile({
     search: searchQuery,
     categoryName: selectedCategory,
   });

@@ -1,87 +1,74 @@
+"use server";
+
 import { cookies } from "next/headers";
 
-export const adminService = {
-  // ⭐ Helper: Build cookie header
-  buildCookieHeader: async () => {
-    const cookieStore = await cookies();
-    return cookieStore
-      .getAll()
-      .map(c => `${c.name}=${c.value}`)
-      .join("; ");
-  },
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
-  // ⭐ 1) Get all bookings
-  getAllBookings: async () => {
-    const cookieHeader = await adminService.buildCookieHeader();
+// ⭐ Helper: Build cookie header
+export async function buildCookieHeader() {
+  const cookieStore = await cookies();
+  return cookieStore
+    .getAll()
+    .map(c => `${c.name}=${c.value}`)
+    .join("; ");
+}
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/admin/bookings`,
-      {
-        headers: {
-          Cookie: cookieHeader,
-        },
-        cache: "no-store",
-        credentials: "include",
-      }
-    );
+// ⭐ 1) Get all bookings
+export async function getAllBookings() {
+  const cookieHeader = await buildCookieHeader();
 
-    if (!res.ok) return null;
-    return res.json();
-  },
+  const res = await fetch(`${API_URL}/admin/bookings`, {
+    headers: { Cookie: cookieHeader },
+    cache: "no-store",
+    credentials: "include",
+  });
 
-  // ⭐ 2) Get all users
-  getAllUsers: async () => {
-    const cookieHeader = await adminService.buildCookieHeader();
+  if (!res.ok) return null;
+  return res.json();
+}
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/admin/getAllUsers`,
-      {
-        headers: {
-          Cookie: cookieHeader,
-        },
-        cache: "no-store",
-        credentials: "include",
-      }
-    );
+// ⭐ 2) Get all users
+export async function getAllUsers() {
+  const cookieHeader = await buildCookieHeader();
 
-    return res.json();
-  },
+  const res = await fetch(`${API_URL}/admin/getAllUsers`, {
+    headers: { Cookie: cookieHeader },
+    cache: "no-store",
+    credentials: "include",
+  });
 
-  // ⭐ 3) Get all tutors
-  getAllTutors: async () => {
-    const cookieHeader = await adminService.buildCookieHeader();
+  return res.json();
+}
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/admin/tutors`,
-      {
-        headers: {
-          Cookie: cookieHeader,
-        },
-        cache: "no-store",
-        credentials: "include",
-      }
-    );
+// ⭐ 3) Get all tutors
+export async function getAllTutors() {
+  const cookieHeader = await buildCookieHeader();
 
-    return res.json();
-  },
+  const res = await fetch(`${API_URL}/admin/tutors`, {
+    headers: { Cookie: cookieHeader },
+    cache: "no-store",
+    credentials: "include",
+  });
 
-  // ⭐ 4) Manage user status (ban/unban)
-  manageUserStatus: async (userId: string, status: "ACTIVE" | "BANNED") => {
-    const cookieHeader = await adminService.buildCookieHeader();
+  return res.json();
+}
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/admin/users/${userId}/status`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Cookie: cookieHeader,
-        },
-        credentials: "include",
-        body: JSON.stringify({ status }),
-      }
-    );
+// ⭐ 4) Manage user status (ban/unban)
+export async function manageUserStatus(
+  userId: string,
+  status: "ACTIVE" | "BANNED"
+) {
+  const cookieHeader = await buildCookieHeader();
 
-    return res.json();
-  },
-};
+  const res = await fetch(`${API_URL}/admin/users/${userId}/status`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: cookieHeader,
+    },
+    credentials: "include",
+    body: JSON.stringify({ status }),
+  });
+
+  return res.json();
+}

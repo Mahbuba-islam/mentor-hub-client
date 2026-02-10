@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { userService } from "./src/services/user.services";
+
 import { Roles } from "./src/constants/roles";
+import { getSession } from "./src/services/user.services";
 
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
@@ -9,7 +10,7 @@ export async function proxy(request: NextRequest) {
   let isAdmin = false;
 
   // Load session from BetterAuth
-  const session = await userService.getSession();
+  const session = await getSession();
   const user = session?.data?.user;
 
   if (user) {

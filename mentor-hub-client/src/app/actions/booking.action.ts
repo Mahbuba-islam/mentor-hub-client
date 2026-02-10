@@ -1,19 +1,20 @@
 
 "use server";
 
-import { adminService } from "@/src/services/admin.services";
-import { bookingService } from "@/src/services/bookings.services";
+
+import { getAllBookings } from "@/src/services/admin.services";
+import { deleteBooking } from "@/src/services/bookings.services";
 import { revalidateTag } from "next/cache";
 
 export const getBookingsAction = async () => {
-  return await adminService.getAllBookings();
+  return await getAllBookings();
   
 };
 
 
 
 export const deleteBookingAction = async (id: string) => {
-  const res = await bookingService.deleteBooking(id);
+  const res = await deleteBooking(id);
 
   if (res.success) {
    

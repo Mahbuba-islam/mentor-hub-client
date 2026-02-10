@@ -1,62 +1,56 @@
+"use server";
 
 import { cookies } from "next/headers";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
-
 export interface CategoryData {
   name: string;
 }
 
-export const categoryService = {
- getCategories: async () => {
+// ⭐ GET CATEGORIES
+export async function getCategories() {
   const res = await fetch(`${API_URL}/categories`, {
     next: { tags: ["categories"] },
   });
 
   const data = await res.json();
   return { data };
-},
+}
 
+// ⭐ CREATE CATEGORY
+export async function createCategory(data: CategoryData) {
+  const cookieStore = await cookies();
 
-  createCategory: async (data: CategoryData) => {
-    const cookieStore = await cookies();
+  const res = await fetch(`${API_URL}/admin/categories`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: cookieStore.toString(),
+    },
+    body: JSON.stringify(data),
+  });
 
-    const res = await fetch(`${API_URL}/admin/categories`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Cookie: cookieStore.toString(),
-      },
-      body: JSON.stringify(data),
-    });
+  return res.json();
+}
 
-    return res.json();
-  },
-
-
-
-// delete category
-deleteCategory: async (id: string) => {
-  const cookieStore = await cookies()
+// ⭐ DELETE CATEGORY
+export async function deleteCategory(id: string) {
+  const cookieStore = await cookies();
 
   const res = await fetch(`${API_URL}/admin/categories/${id}`, {
     method: "DELETE",
     headers: {
       Cookie: cookieStore.toString(),
     },
-  })
+  });
 
-  return res.json()
-},
+  return res.json();
+}
 
-
-
-
-//category update
-
-  updateCategory: async (id: string, data: CategoryData) => {
-  const cookieStore = await cookies()
+// ⭐ UPDATE CATEGORY
+export async function updateCategory(id: string, data: CategoryData) {
+  const cookieStore = await cookies();
 
   const res = await fetch(`${API_URL}/admin/categories/${id}`, {
     method: "PUT",
@@ -65,8 +59,7 @@ deleteCategory: async (id: string) => {
       Cookie: cookieStore.toString(),
     },
     body: JSON.stringify(data),
-  })
+  });
 
-  return res.json()
+  return res.json();
 }
-};

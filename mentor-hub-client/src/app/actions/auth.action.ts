@@ -1,8 +1,8 @@
 "use server"
 
 import { auth } from "@/lib/auth"
+import { getSession, registerUser } from "@/src/services/user.services"
 
-import { userService } from "@/src/services/user.services"
 
 import { redirect } from "next/navigation"
 
@@ -21,7 +21,7 @@ export async function registerUserAction(data: {
   email: string;
   role: "STUDENT" | "TUTOR";
 }) {
-  return await userService.registerUser(data);
+  return await registerUser(data);
 }
 
 
@@ -29,7 +29,7 @@ export async function registerUserAction(data: {
 
 
 export const getSessionAction = async () => {
-  const res = await userService.getSession();
+  const res = await getSession();
 
   if (res.error) {
     return {

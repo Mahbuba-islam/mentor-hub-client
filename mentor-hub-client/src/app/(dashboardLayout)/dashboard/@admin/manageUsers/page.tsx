@@ -1,10 +1,11 @@
 
-import { adminService } from "@/src/services/admin.services";
+
+import { getAllUsers } from "@/src/services/admin.services";
 import ManageUserTable from "./manageUserTable";
 
 export default async function ManageUsersPage() {
   // Server-side fetch (secure)
-  const data = await adminService.getAllUsers();
+  const data = await getAllUsers();
 
   return (
     <div className="p-6">

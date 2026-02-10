@@ -1,14 +1,15 @@
 
 
 import Image from "next/image";
-import { tutorService } from "@/src/services/tutor.services";
+
 import BookSessionModal from "./BookSessionModal";
 import {  ReviewWithStudent } from "@/src/types/review.types";
+import { getTutorById } from "@/src/services/tutor.services";
 
 export default async function TutorDetails({ params }: { params: { id: string } }) {
   const { id } = await params;
 
-  const { data } = await tutorService.getTutorById(id);
+  const { data } = await getTutorById(id);
 
   if (!data.data) {
     return <div className="text-center py-20 text-gray-500">Tutor not found</div>;
