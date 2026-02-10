@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function HeroBanner() {
   return (
     <section className="mt-6 px-4 md:px-10">
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#5624D0] to-[#b00ea5] text-white">
+      <div className="relative overflow-hidden rounded-2xl bg-linear-to-r from-[#5624D0] to-[#b00ea5] text-white">
         <div className="grid md:grid-cols-2 gap-6 items-center p-6 sm:p-10 lg:p-14">
 
           {/* Left: Text */}

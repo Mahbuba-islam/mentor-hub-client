@@ -31,7 +31,7 @@ export function NavbarSearch() {
       <button
         type="submit"
         className="px-4 py-1.5 rounded-full text-white text-sm font-semibold
-        bg-gradient-to-r from-[#5624D0] to-[#b00ea5] hover:opacity-90 transition"
+        bg-linear-to-r from-[#5624D0] to-[#b00ea5] hover:opacity-90 transition"
       >
         Search
       </button>

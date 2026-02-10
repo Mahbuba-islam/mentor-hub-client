@@ -29,7 +29,7 @@ export default async function FeaturedTutors() {
         {tutor.isFeatured && (
          <span
        className="absolute top-5 right-5 z-20 px-2 py-0.5 text-[7px] font-semibold
-     bg-gradient-to-r from-[#5624D0] to-[#b00ea5] text-white rounded-full shadow"
+     bg-linear-to-r from-[#5624D0] to-[#b00ea5] text-white rounded-full shadow"
     >
    Featured
 </span>
@@ -39,11 +39,12 @@ export default async function FeaturedTutors() {
         <TutorCard
           id={tutor.id}
           bio={tutor.bio}
-          category={tutor.category?.name}
+          categoryName={tutor.category?.name ?? ""}
           price={tutor.price}
           rating={tutor.rating}
           totalReviews={tutor.totalReviews}
-          subject={tutor.subject}
+          subject={Array.isArray(tutor.subject) ? tutor.subject : [tutor.subject]}
+
           user={{
             name: tutor.user?.name ?? "Unknown",
             image: tutor.user?.image ?? "Unknown",
@@ -56,7 +57,7 @@ export default async function FeaturedTutors() {
  <Link
   href="/tutors"
   className="group relative mx-auto inline-flex items-center gap-2 text-md font-semibold 
-    bg-gradient-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent"
+    bg-linear-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent"
 >
   Explore All Tutors
 
@@ -68,8 +69,8 @@ export default async function FeaturedTutors() {
   </span>
 
   <span
-    className="absolute left-0 -bottom-0.5 h-[2px] w-0 
-      bg-gradient-to-r from-[#5624D0] to-[#b00ea5] 
+    className="absolute left-0 -bottom-0.5 h-0.5 w-0 
+      bg-linear-to-r from-[#5624D0] to-[#b00ea5] 
       transition-all duration-300 group-hover:w-full"
   />
 </Link>

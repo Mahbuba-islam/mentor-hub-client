@@ -8,13 +8,14 @@ export type TutorCardProps = {
   bio?: string | null;
   categoryName?: string;
   price?: number | null;
-  rating?: number;
+  rating?: number | null;
   subject: string[];
-  totalReviews?: number;
+  totalReviews?: number | null;
   user: {
-    name: string;
-    image: string | null;
+    name: string | null;
+    image?: string | null;
   };
+  onDetailsClick?: (id: string) => void;
 };
 
 export default function TutorCard({
@@ -24,16 +25,23 @@ export default function TutorCard({
   user,
   subject
 }: TutorCardProps) {
+
+  
+  const safeImage =
+    user?.image && user.image.startsWith("http")
+      ? user.image
+      : "https://i.ibb.co/xS7Y9FN0/a-colorful-modern-av.png";
+
   return (
     <div
       key={id}
       className="rounded-xl border border-gray-200 shadow-sm hover:shadow-lg 
       transition-all duration-300 hover:-translate-y-1 overflow-hidden bg-white p-4"
     >
-      {/* Top Image - Semi Rounded */}
+      {/* Top Image */}
       <div className="w-full h-60 bg-gray-100 flex items-center justify-center">
         <Image
-          src={user?.image || "https://i.ibb.co/xS7Y9FN0/a-colorful-modern-av.png"}
+          src={safeImage}
           alt={user?.name || "Tutor"}
           width={400}
           height={300}
@@ -43,15 +51,12 @@ export default function TutorCard({
 
       {/* Content */}
       <div className="p-5">
-        {/* Name */}
         <p className="text-base font-semibold text-gray-900 leading-tight">
           {user?.name ?? "Unknown"}
         </p>
 
-        {/* Category */}
         <p className="text-xs text-gray-500 mt-0.5">{categoryName}</p>
 
-        {/* Bio */}
         <p className="mt-2 text-gray-700 text-xs line-clamp-2 leading-relaxed">
           {bio}
         </p>
@@ -72,9 +77,6 @@ export default function TutorCard({
             ))}
         </div>
 
-      
-
-        {/* CTA Button */}
         <Link
           href={`/tutorDetails/${id}`}
           className="block w-full text-center py-2 mt-5 rounded-md font-semibold 

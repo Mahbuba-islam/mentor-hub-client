@@ -13,7 +13,6 @@ export const getUsersAction = async () => {
 
 
 
-
 export async function setActiveAction(userId: string) {
  await adminService.manageUserStatus(userId, "ACTIVE");
 }

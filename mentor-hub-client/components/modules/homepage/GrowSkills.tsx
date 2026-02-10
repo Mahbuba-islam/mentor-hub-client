@@ -8,7 +8,7 @@ export function GrowSkillsSection() {
 
         {/* Heading */}
         <h2 className="text-3xl md:text-4xl font-extrabold 
-          bg-gradient-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent">
+          bg-linear-to-r from-[#5624D0] to-[#b00ea5] bg-clip-text text-transparent">
           Grow Your Skills With MentorHub
         </h2>
 

@@ -48,8 +48,8 @@ export function SignInForm({ ...props }: React.ComponentProps<typeof Card>) {
         // ⭐ Send role to backend
         const { data, error } = await authClient.signIn.email({
           email: value.email,
-          password: value.password,
-          role: value.role ,
+          password: value.password
+         
         });
 
         if (error) {

@@ -215,7 +215,7 @@
 
 import { auth } from "@/lib/auth"
 import { studentService } from "@/src/services/userDashboard.services"
-import {  ReviewWithStudent } from "@/src/types/review.types"
+import {  CreateReviewPayload } from "@/src/types/review.types"
 import { revalidateTag } from "next/cache"
 
 // -----------------------------
@@ -294,7 +294,7 @@ export const getPastBookingsAction = async () => {
 // -----------------------------
 // LEAVE REVIEW
 // -----------------------------
-export const leaveReviewAction = async (payload:ReviewWithStudent) => {
+export const leaveReviewAction = async (payload:CreateReviewPayload) => {
   const res = await studentService.leaveReview(payload)
   revalidateTag("student-reviews", "page")
   return res

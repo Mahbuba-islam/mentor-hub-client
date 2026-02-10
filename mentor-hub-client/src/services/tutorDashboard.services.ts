@@ -3,27 +3,40 @@ import { cookies } from "next/headers";
 import { env } from "@/src/types/env";
 
 export interface TutorProfileData {
-  image: null;
+  
   bio: string;
   price: number;
   categoryId: string;
   subject: string[];   
   experience?: string;
+  isFeatured?:boolean
+}
+export interface AvailabilitySlot {
+  date: string;
+  timeSlots: string[];
 }
 
-export interface AvailabilitySlot {
-  day: string;
-  startTime: string;
-  endTime: string;
-  
+
+
+
+
+export interface TutorProfileData {
+  bio: string;
+  price: number;
+  categoryId: string;
+  subject: string[];
+  experience?: string;
 }
+
+
+
 
 export const tutorService = {
   // CREATE TUTOR PROFILE
   createTutorProfile: async (data: TutorProfileData) => {
     const cookieStore = await cookies();
 
-    const res = await fetch(`${env.API_URL}/tutors`, {
+    const res = await fetch(`${env.API_URL}/tutors/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,13 +48,31 @@ export const tutorService = {
     return res.json();
   },
 
+// createTutorProfile: async (data: TutorProfileData) => {
+//     try {
+//       const res = await fetch(`${env.API_URL}/tutors/create`, {
+//         method: "POST",
+//         credentials: "include", // 🔥 IMPORTANT: lets browser forward real cookies
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify(data),
+//       });
+
+//       const result = await res.json();
+//       return result;
+//     } catch (err) {
+//       console.error("Tutor profile create error:", err);
+//       return { success: false, message: "Something went wrong" };
+//     }
+//   },
 
 
 
 
 
   // GET TUTOR PROFILE 
-  getTutorProfile: async (p0: { search: any; categoryName: any; }) => {
+  getTutorProfile: async () => {
     const cookieStore = await cookies();
 
     const res = await fetch(`${env.API_URL}/tutors/dashboard`, {

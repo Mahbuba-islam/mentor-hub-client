@@ -18,3 +18,8 @@ export interface ReviewWithStudent {
     email: string;
   };
 }
+export interface CreateReviewPayload {
+  bookingId: string;
+  rating: number;
+  comment: string;
+}

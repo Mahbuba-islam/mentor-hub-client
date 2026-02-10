@@ -1,3 +1,7 @@
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
+
 import { getCategoriesAction } from "@/src/app/actions/category.action"
 import CategoryList from "./categoryList"
 import Link from "next/link"

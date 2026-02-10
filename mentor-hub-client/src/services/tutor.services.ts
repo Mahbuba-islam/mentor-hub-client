@@ -161,7 +161,6 @@ export const tutorService = {
 
 
 
-
 async getFeaturedTutors() {
   try {
     const res = await fetch(`${API_URL}/tutors/featured`, {

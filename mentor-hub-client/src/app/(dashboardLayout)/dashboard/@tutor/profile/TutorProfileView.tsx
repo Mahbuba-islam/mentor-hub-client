@@ -7,22 +7,27 @@ import { Category } from "@/src/types/category.types";
 
 interface TutorProfileViewProps {
   profile: TutorProfile;
-  categories: Category[];   
+  categories: Category[];
 }
 
 export function TutorProfileView({ profile, categories }: TutorProfileViewProps) {
   const [isEditing, setIsEditing] = useState(false);
 
+  // ⭐ Normalize subjects safely
+  const subjectsString = Array.isArray(profile.subject)
+    ? profile.subject.join(", ")
+    : profile.subject || "";
+
   if (isEditing) {
     return (
       <TutorProfileForm
-        categories={{ data: categories }}   
+        categories={{ data: categories }}
         defaultValues={{
           bio: profile.bio ?? "",
           price: profile.price ?? 0,
           categoryId: profile.categoryId,
-          subjects: profile.subject.join(", "),
-          experience: profile.experience || "",
+          subject: subjectsString, // ⭐ FIXED
+          isFeatured: profile.isFeatured ?? false,
         }}
         isUpdate
         onCancel={() => setIsEditing(false)}
@@ -37,7 +42,9 @@ export function TutorProfileView({ profile, categories }: TutorProfileViewProps)
       <p><strong>Bio:</strong> {profile.bio}</p>
       <p><strong>Price:</strong> ${profile.price}</p>
       <p><strong>Category:</strong> {profile.category?.name}</p>
-      <p><strong>Subjects:</strong> {profile.subject.join(", ")}</p>
+
+      
+      <p><strong>Subjects:</strong> {subjectsString}</p>
 
       <button
         onClick={() => setIsEditing(true)}

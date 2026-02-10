@@ -1,3 +1,7 @@
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
+
 import { getBookingsAction } from "@/src/app/actions/booking.action";
 import { Booking } from "@/src/types/booking.types";
 

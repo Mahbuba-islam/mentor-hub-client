@@ -1,3 +1,7 @@
+export const dynamic = "force-dynamic";
+export const fetchCache = "force-no-store";
+
+
 import { AppSidebar } from "@/components/app-sidebar"
 import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"

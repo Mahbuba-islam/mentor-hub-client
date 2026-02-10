@@ -8,6 +8,7 @@ export function getSidebarForRole(role: Roles) {
 
   return sidebarItems[role].filter(item => {
     if (!item.feature) return true;
-    return roleFeatures[item.feature] === true;
+
+    return item.feature in roleFeatures;
   });
 }

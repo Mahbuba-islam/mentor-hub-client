@@ -32,7 +32,6 @@ export const createTutorProfileAction = async (data:TutorProfileData) => {
 
 
 
-
 // -----------------------------
 // GET TUTOR PROFILE
 // -----------------------------

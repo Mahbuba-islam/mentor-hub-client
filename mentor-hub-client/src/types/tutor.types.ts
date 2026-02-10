@@ -4,15 +4,14 @@ import { User } from "./user.types";
 import { Category } from "./category.types";
 
 export interface TutorProfile {
-  experience: string;
-  id: string;
+   id: string;
   userId: string;
   categoryId: string;
 
   bio?: string | null;
   price?: number | null;
   rating: number;
-  subject: string[];
+  subject: string |string[];
 
   totalReviews: number;
   isFeatured: boolean;
@@ -33,7 +32,7 @@ export interface TutorsPageProps {
 export interface TutorUser {
   name: string;
   email: string;
-  image?: string | null;
+  image?: string;
 }
 
 export interface TutorCategory {
@@ -72,6 +71,21 @@ export interface TutorByIdResponse {
 export type CreateTutorProfilePayload = {
   bio: string;
   price: number;
-  categoryId: string;
+  category: string;
+  subject: string | string[];
+};
+
+
+export type Tutor = {
+  id: string;
+  bio: string | null;
+  category: {
+    name: string;
+  } | null;
   subject: string[];
+  price: number | null;
+  rating: number | null;
+  totalReviews: number | null;
+  isFeatured: boolean;
+  user: TutorUser;
 };

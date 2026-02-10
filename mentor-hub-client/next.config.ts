@@ -2,7 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-   images: {
+
+  trailingSlash: false,   
+
+  images: {
     remotePatterns: [
       {
         protocol: "https",
@@ -11,16 +14,28 @@ const nextConfig: NextConfig = {
     ],
   },
 
-   experimental: {
+  experimental: {
     cacheLife: {
       page: {
-        stale: 60,        // seconds before revalidation can happen
-        revalidate: 300,  // background revalidation
-        expire: 3600,     // hard expiration
+        stale: 60,
+        revalidate: 300,
+        expire: 3600,
       },
     },
   },
 
+//   async rewrites() {
+//   return [
+//     {
+//       source: "/api/auth/:path*",
+//       destination: "https://mentorhub-r0u7.onrender.com/api/auth/:path*"
+//     }
+//   ];
+// }
+async rewrites() {
+  return [];
 }
+
+};
 
 export default nextConfig;

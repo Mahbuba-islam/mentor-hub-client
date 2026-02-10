@@ -1,16 +1,20 @@
 "use server"
 
-import { authClient } from "@/lib/auth-client"
+import { auth } from "@/lib/auth"
+
 import { userService } from "@/src/services/user.services"
 
 import { redirect } from "next/navigation"
 
+// export async function logoutAction() {
+//   await authClient.signOut()
+//   redirect("/")   
+// }
+
 export async function logoutAction() {
-  await authClient.signOut()
-  redirect("/")   
+  await auth.api.signOut()
+  redirect("/")
 }
-
-
 export async function registerUserAction(data: {
   userId: string;
   name: string;
@@ -19,3 +23,25 @@ export async function registerUserAction(data: {
 }) {
   return await userService.registerUser(data);
 }
+
+
+
+
+
+export const getSessionAction = async () => {
+  const res = await userService.getSession();
+
+  if (res.error) {
+    return {
+      success: false,
+      data: null,
+      error: res.error,
+    };
+  }
+
+  return {
+    success: true,
+    data: res.data,
+    error: null,
+  };
+};

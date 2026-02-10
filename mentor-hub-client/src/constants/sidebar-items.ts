@@ -16,7 +16,8 @@ export const sidebarItems: Record<Roles, SidebarItem[]> = {
   [Roles.ADMIN]: [
     { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Bookings", href: "/dashboard/bookings", icon: BookOpen },
-  { label: "Create Category", href: "/dashboard/categories", icon: FolderPlus },
+  { label: "Create category", href: "/dashboard/categories/createCategories", icon: FolderPlus },
+  { label: "Manage category", href: "/dashboard/categories", icon: FolderPlus },
   { label: "All Users", href: "/dashboard/users", icon: Users },
   { label: "Manage Users", href: "/dashboard/manageUsers", icon: UserCog },
 

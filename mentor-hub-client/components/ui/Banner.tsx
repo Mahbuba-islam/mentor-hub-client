@@ -16,7 +16,7 @@ export default function Banner() {
             Learn anything, anytime — with expert tutors from around the world.
           </p>
           <Link href="/tutors">
-           <button className="px-6 py-3 bg-gradient-to-r from-[#5624D0] to-[#b00ea5] text-white rounded-lg font-semibold shadow hover:scale-105 transition">
+           <button className="px-6 py-3 bg-linear-to-r from-[#5624D0] to-[#b00ea5] text-white rounded-lg font-semibold shadow hover:scale-105 transition">
             Get Started
           </button>
           </Link>
