@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 
-import { Navbar } from "@/components/Navbar1";
+import { Navbar } from "@/components/navbar1";
 import Footer from "@/components/ui/Footer";
 import AboutPage from "@/components/modules/homepage/About";
 import { Animated } from "@/components/modules/homepage/Animated";

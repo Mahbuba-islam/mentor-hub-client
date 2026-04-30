@@ -14,13 +14,11 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  experimental: {
-    cacheLife: {
-      page: {
-        stale: 60,
-        revalidate: 300,
-        expire: 3600,
-      },
+  cacheLife: {
+    page: {
+      stale: 60,
+      revalidate: 300,
+      expire: 3600,
     },
   },
 
